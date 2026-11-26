@@ -271,6 +271,7 @@
       overflow-y: auto;
     }
     .modal-backdrop.open { display: flex; }
+    #breakdown-modal { z-index: 1100; background: rgba(17, 24, 39, 0.82); }
     .modal {
       background: var(--surface);
       width: 100%;
@@ -377,10 +378,12 @@
       color: var(--text);
       font-weight: 700;
     }
+
+    /* Galeri Breakdown (Bisa Diklik) */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
+      gap: 16px;
       margin-top: 12px;
     }
     .gallery-item {
@@ -388,14 +391,91 @@
       border-radius: 10px;
       overflow: hidden;
       background: #f9fafb;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .gallery-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+      border-color: #9ca3af;
     }
     .gallery-item img {
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
       display: block;
+      background: #111827;
     }
-    .gallery-caption { padding: 8px 12px; font-size: 0.82rem; color: var(--muted); }
+    .gallery-footer {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .gallery-caption { font-size: 0.86rem; color: var(--text); font-weight: 500; }
+    .gallery-cta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    /* Tampilan Artikel Breakdown (Ala Gerlogu) */
+    .bd-modal-body {
+      padding: 28px 32px 36px;
+    }
+    .bd-main-media {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111827;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .bd-main-media img {
+      max-width: 100%;
+      max-height: 460px;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .bd-content {
+      font-size: 0.96rem;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+    .bd-bullet {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      align-items: flex-start;
+    }
+    .bd-bullet-dot {
+      color: #111827;
+      font-weight: 700;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+    .bd-bullet.level-0 { margin-left: 0; }
+    .bd-bullet.level-1 { margin-left: 22px; }
+    .bd-bullet.level-2 { margin-left: 44px; }
+    .bd-para { margin-bottom: 10px; color: #374151; }
+    .bd-spacer { height: 10px; }
+    .bd-inline-img {
+      margin: 18px auto 22px;
+      text-align: center;
+    }
+    .bd-inline-img img {
+      max-width: 100%;
+      max-height: 440px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      display: block;
+      margin: 0 auto;
+    }
 
     /* Form Editor Style */
     .editor-head {
@@ -404,6 +484,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
     }
     .editor-head h2 { font-size: 1.25rem; }
     .editor-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
@@ -452,6 +533,30 @@
       border: 1px solid var(--border);
     }
     .dynamic-row input { flex: 1; min-width: 130px; }
+    .gallery-editor-card {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .gallery-editor-top {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .gallery-editor-top input { flex: 1; min-width: 160px; }
+    .gal-detail-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
     /* Toast Notifikasi */
     .toast {
@@ -472,7 +577,7 @@
 
     @media (max-width: 680px) {
       .about-section, .form-row { grid-template-columns: 1fr; }
-      .modal-content { padding: 20px; }
+      .modal-content, .bd-modal-body { padding: 20px; }
       header { padding: 36px 0 28px; }
     }
   </style>
@@ -567,6 +672,25 @@
     </div>
   </div>
 
+  <!-- MODAL 1B: DETAIL PENJELASAN BREAKDOWN (Muncul saat GIF/Foto diklik) -->
+  <div class="modal-backdrop" id="breakdown-modal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="editor-head">
+        <div>
+          <div style="font-size:0.78rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); font-weight:600;" id="bd-game-label">Breakdown</div>
+          <h2 id="bd-title">Detail Pembuatan</h2>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="closeBackdrop('breakdown-modal')">← Kembali</button>
+      </div>
+      <div class="bd-modal-body">
+        <div class="bd-main-media">
+          <img id="bd-main-img" src="" alt="" />
+        </div>
+        <div class="bd-content" id="bd-content"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL 2: LOGIN ADMIN -->
   <div class="modal-backdrop" id="login-modal">
     <div class="modal modal-sm">
@@ -645,7 +769,7 @@
         <div class="form-row">
           <div class="field">
             <label>Judul Game / Proyek</label>
-            <input type="text" id="proj-title" placeholder="Contoh: Lake Strike" />
+            <input type="text" id="proj-title" placeholder="Contoh: Nicholas Flight" />
           </div>
           <div class="field">
             <label>Tahun</label>
@@ -655,7 +779,7 @@
         <div class="form-row">
           <div class="field">
             <label>Peran Singkat (Muncul di Kartu Depan)</label>
-            <input type="text" id="proj-role" placeholder="3D Environment & Prop Artist" />
+            <input type="text" id="proj-role" placeholder="2D Artist & Animator" />
           </div>
           <div class="field">
             <label>Tagline Singkat</label>
@@ -690,21 +814,21 @@
         <div class="form-row">
           <div class="field">
             <label>Info: Peran</label>
-            <input type="text" id="meta-peran" placeholder="3D Artist" />
+            <input type="text" id="meta-peran" placeholder="2D Artist" />
           </div>
           <div class="field">
             <label>Info: Ukuran Tim</label>
-            <input type="text" id="meta-tim" placeholder="5 Orang" />
+            <input type="text" id="meta-tim" placeholder="4 Orang" />
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label>Info: Engine / Tools</label>
-            <input type="text" id="meta-tools" placeholder="Unity, Blender" />
+            <input type="text" id="meta-tools" placeholder="Aseprite, Unity" />
           </div>
           <div class="field">
             <label>Info: Durasi / Status</label>
-            <input type="text" id="meta-durasi" placeholder="3 Bulan" />
+            <input type="text" id="meta-durasi" placeholder="1 Minggu" />
           </div>
         </div>
 
@@ -715,9 +839,9 @@
 
         <div class="field">
           <label>Kontribusi Saya (1 baris = 1 poin)</label>
-          <textarea id="proj-contributions" style="min-height:120px;" placeholder="Membuat aset 3D environment di Blender
-Mengatur lighting di Unity
-Membuat tekstur stylized"></textarea>
+          <textarea id="proj-contributions" style="min-height:110px;" placeholder="Membuat animasi player
+Membuat environment
+Membuat aset UI"></textarea>
           <small>Tekan Enter untuk membuat poin kontribusi baru.</small>
         </div>
 
@@ -728,9 +852,9 @@ Membuat tekstur stylized"></textarea>
         </div>
 
         <div class="field">
-          <label>Galeri Breakdown / Screenshot Tambahan</label>
+          <label>Galeri Breakdown / GIF (Bisa Diklik untuk Baca Cara Pembuatan)</label>
           <div id="proj-gallery-list"></div>
-          <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-gallery">+ Tambah Foto Breakdown</button>
+          <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-gallery">+ Tambah Foto / GIF Breakdown</button>
         </div>
       </div>
       <div class="editor-foot">
@@ -798,11 +922,52 @@ Membuat tekstur stylized"></textarea>
       document.getElementById("unsaved-badge").classList.toggle("show", flag);
     }
 
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&")
+        .replace(/</g, "<")
+        .replace(/>/g, ">")
+        .replace(/"/g, """);
+    }
+
     function utf8ToBase64(str) {
       const bytes = new TextEncoder().encode(str);
       let binary = "";
       bytes.forEach(b => binary += String.fromCharCode(b));
       return btoa(binary);
+    }
+
+    // Parser teks breakdown bergaya artikel (poin bertingkat, bold, panah, gambar sisipan)
+    function formatInlineText(raw) {
+      return escapeHtml(raw)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/->/g, "→");
+    }
+
+    function renderBreakdownMarkup(text) {
+      if (!text || !text.trim()) {
+        return `<p class="bd-para" style="color:var(--muted);">Belum ada penjelasan cara pembuatan untuk item ini.</p>`;
+      }
+      const lines = text.split("\n");
+      return lines.map(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return `<div class="bd-spacer"></div>`;
+
+        const imgMatch = trimmed.match(/^\[GAMBAR:\s*(.+?)\]$/i);
+        if (imgMatch) {
+          const safeUrl = escapeHtml(imgMatch[1].trim());
+          return `<div class="bd-inline-img"><img src="${safeUrl}" alt="Step breakdown" loading="lazy" /></div>`;
+        }
+
+        const bulletMatch = line.match(/^(\s*)[-*•]\s+(.*)$/);
+        if (bulletMatch) {
+          const spaces = bulletMatch[1].replace(/\t/g, "  ").length;
+          const level = Math.min(2, Math.floor(spaces / 2));
+          return `<div class="bd-bullet level-${level}"><span class="bd-bullet-dot">•</span><div>${formatInlineText(bulletMatch[2])}</div></div>`;
+        }
+
+        return `<p class="bd-para">${formatInlineText(trimmed)}</p>`;
+      }).join("");
     }
 
     async function loadData() {
@@ -847,15 +1012,15 @@ Membuat tekstur stylized"></textarea>
 
       document.getElementById("site-nav").innerHTML =
         `<a href="#about">About</a>` +
-        (p.sosmed || []).map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("") +
-        (p.email ? `<a href="mailto:${p.email}">Email</a>` : "");
+        (p.sosmed || []).map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a>`).join("") +
+        (p.email ? `<a href="mailto:${escapeHtml(p.email)}">Email</a>` : "");
 
       document.getElementById("footer-links").innerHTML = p.email
-        ? `<a href="mailto:${p.email}" style="color:inherit;text-decoration:none;">${p.email}</a>`
+        ? `<a href="mailto:${escapeHtml(p.email)}" style="color:inherit;text-decoration:none;">${escapeHtml(p.email)}</a>`
         : "";
 
       document.getElementById("skills-list").innerHTML = (p.skills || [])
-        .map(sk => `<span class="tag">${sk}</span>`).join("");
+        .map(sk => `<span class="tag">${escapeHtml(sk)}</span>`).join("");
 
       const grid = document.getElementById("projects-grid");
       grid.innerHTML = "";
@@ -875,14 +1040,14 @@ Membuat tekstur stylized"></textarea>
             <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
           </div>
           <div class="card-thumb" style="${boxStyle}">
-            <img src="${proj.thumbnail}" alt="${proj.title}" style="${imgStyle}" loading="lazy" />
+            <img src="${escapeHtml(proj.thumbnail)}" alt="${escapeHtml(proj.title)}" style="${imgStyle}" loading="lazy" />
           </div>
           <div class="card-body">
             <div class="card-top">
-              <h3 class="card-title">${proj.title}</h3>
-              <span class="card-year">${proj.year || ""}</span>
+              <h3 class="card-title">${escapeHtml(proj.title)}</h3>
+              <span class="card-year">${escapeHtml(proj.year || "")}</span>
             </div>
-            <div class="card-role">${proj.role || ""}</div>
+            <div class="card-role">${escapeHtml(proj.role || "")}</div>
             <div class="card-hint">Lihat kontribusi →</div>
           </div>
         `;
@@ -917,32 +1082,51 @@ Membuat tekstur stylized"></textarea>
 
       document.getElementById("modal-links").innerHTML = (p.links || [])
         .filter(l => l.label && l.url)
-        .map((l, i) => `<a class="btn-link ${i === 0 ? "" : "secondary"}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
+        .map((l, i) => `<a class="btn-link ${i === 0 ? "" : "secondary"}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)}</a>`)
         .join("");
 
       document.getElementById("modal-meta").innerHTML = Object.entries(p.meta || {})
         .filter(([k, v]) => v)
-        .map(([k, v]) => `<div class="meta-item"><span>${k}</span><strong>${v}</strong></div>`)
+        .map(([k, v]) => `<div class="meta-item"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong></div>`)
         .join("");
 
       document.getElementById("modal-contributions").innerHTML = (p.contributions || [])
-        .map(c => `<li>${c}</li>`).join("");
+        .map(c => `<li>${escapeHtml(c)}</li>`).join("");
 
       const galSec = document.getElementById("modal-gallery-section");
       const galEl = document.getElementById("modal-gallery");
       const validGal = (p.gallery || []).filter(g => g.img);
       if (validGal.length > 0) {
         galSec.style.display = "block";
-        galEl.innerHTML = validGal.map(g => `
-          <div class="gallery-item">
-            <img src="${g.img}" alt="${g.caption || p.title}" loading="lazy" />
-            ${g.caption ? `<div class="gallery-caption">${g.caption}</div>` : ""}
-          </div>
-        `).join("");
+        galEl.innerHTML = "";
+        validGal.forEach((g) => {
+          const item = document.createElement("div");
+          item.className = "gallery-item";
+          const hasDetail = g.detail && g.detail.trim().length > 0;
+          item.innerHTML = `
+            <img src="${escapeHtml(g.img)}" alt="${escapeHtml(g.caption || p.title)}" loading="lazy" />
+            <div class="gallery-footer">
+              ${g.caption ? `<div class="gallery-caption">${escapeHtml(g.caption)}</div>` : ""}
+              <div class="gallery-cta">${hasDetail ? "Lihat cara pembuatan →" : "Klik untuk perbesar →"}</div>
+            </div>
+          `;
+          item.addEventListener("click", () => openBreakdownModal(p.title, g));
+          galEl.appendChild(item);
+        });
       } else {
         galSec.style.display = "none";
       }
       openBackdrop("view-modal");
+    }
+
+    function openBreakdownModal(gameTitle, galItem) {
+      document.getElementById("bd-game-label").textContent = `${gameTitle} — Breakdown`;
+      document.getElementById("bd-title").textContent = galItem.caption || "Detail Pembuatan";
+      const mainImg = document.getElementById("bd-main-img");
+      mainImg.src = galItem.img;
+      mainImg.alt = galItem.caption || gameTitle;
+      document.getElementById("bd-content").innerHTML = renderBreakdownMarkup(galItem.detail);
+      openBackdrop("breakdown-modal");
     }
 
     // Ganti Rasio Global dari Bar Admin
@@ -1098,8 +1282,8 @@ Membuat tekstur stylized"></textarea>
       const div = document.createElement("div");
       div.className = "dynamic-row";
       div.innerHTML = `
-        <input type="text" class="sos-label" placeholder="Nama (misal: Itch.io)" value="${label}" />
-        <input type="text" class="sos-url" placeholder="https://..." value="${url}" />
+        <input type="text" class="sos-label" placeholder="Nama (misal: Itch.io)" value="${escapeHtml(label)}" />
+        <input type="text" class="sos-url" placeholder="https://..." value="${escapeHtml(url)}" />
         <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
       `;
       document.getElementById("prof-sosmed-list").appendChild(div);
@@ -1146,38 +1330,76 @@ Membuat tekstur stylized"></textarea>
       const div = document.createElement("div");
       div.className = "dynamic-row";
       div.innerHTML = `
-        <input type="text" class="lnk-label" placeholder="Teks Tombol (misal: Mainkan)" value="${label}" />
-        <input type="text" class="lnk-url" placeholder="https://..." value="${url}" />
+        <input type="text" class="lnk-label" placeholder="Teks Tombol (misal: Mainkan)" value="${escapeHtml(label)}" />
+        <input type="text" class="lnk-url" placeholder="https://..." value="${escapeHtml(url)}" />
         <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
       `;
       document.getElementById("proj-links-list").appendChild(div);
     }
 
-    function addGalleryRow(img = "", caption = "") {
+    function addGalleryRow(img = "", caption = "", detail = "") {
       const div = document.createElement("div");
-      div.className = "dynamic-row";
+      div.className = "gallery-editor-card";
       div.innerHTML = `
-        <input type="text" class="gal-img" placeholder="URL gambar atau Upload" value="${img}" />
-        <label class="btn btn-outline btn-sm" style="cursor:pointer;">
-          Upload
-          <input type="file" accept="image/*" style="display:none;" />
-        </label>
-        <input type="text" class="gal-cap" placeholder="Keterangan foto" value="${caption}" />
-        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
+        <div class="gallery-editor-top">
+          <input type="text" class="gal-img" placeholder="URL GIF / Gambar utama" value="${escapeHtml(img)}" />
+          <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+            Upload
+            <input type="file" accept="image/*" class="gal-file-main" style="display:none;" />
+          </label>
+          <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.gallery-editor-card').remove()">Hapus</button>
+        </div>
+        <input type="text" class="gal-cap" placeholder="Judul Breakdown (misal: Pembuatan Animasi Player)" value="${escapeHtml(caption)}" />
+        <div class="gal-detail-tools">
+          <small style="color:var(--muted);">Penjelasan cara pembuatan (muncul saat GIF/foto diklik):</small>
+          <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+            + Sisipkan Gambar/GIF di Penjelasan
+            <input type="file" accept="image/*" class="gal-file-inline" style="display:none;" />
+          </label>
+        </div>
+        <textarea class="gal-detail" style="min-height:110px;" placeholder="- **Tahap 1** -> Membuat sketsa & sprite di Aseprite
+  - Menentukan ukuran kanvas 32x32 px
+  - Membuat frame idle, jalan, dan ambil barang
+- **Tahap 2** -> Export sprite sheet ke Unity"></textarea>
+        <small style="color:var(--muted);">Tips format: pakai <code>- </code> untuk poin, <code>  - </code> (2 spasi) untuk sub-poin, <code>**teks**</code> untuk <strong>tebal</strong>, dan <code>-></code> untuk panah (→).</small>
       `;
-      const fileInput = div.querySelector('input[type="file"]');
+      div.querySelector(".gal-detail").value = detail || "";
+
+      // Upload gambar utama breakdown
+      const mainFileInput = div.querySelector(".gal-file-main");
       const urlInput = div.querySelector(".gal-img");
-      fileInput.addEventListener("change", async (e) => {
+      mainFileInput.addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        showToast("Meng-upload foto breakdown...");
+        showToast("Meng-upload foto/GIF breakdown...");
         try {
           urlInput.value = await uploadImageToGitHub(file);
-          showToast("Foto berhasil di-upload!");
+          showToast("Berhasil di-upload!");
         } catch (err) {
           alert(err.message);
         }
       });
+
+      // Upload & sisipkan gambar/GIF di tengah penjelasan
+      const inlineFileInput = div.querySelector(".gal-file-inline");
+      const detailArea = div.querySelector(".gal-detail");
+      inlineFileInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        showToast("Meng-upload gambar sisipan...");
+        try {
+          const uploadedUrl = await uploadImageToGitHub(file);
+          const tag = `\n[GAMBAR: ${uploadedUrl}]\n`;
+          const pos = detailArea.selectionStart ?? detailArea.value.length;
+          detailArea.value = detailArea.value.slice(0, pos) + tag + detailArea.value.slice(pos);
+          showToast("Gambar berhasil disisipkan ke penjelasan!");
+        } catch (err) {
+          alert(err.message);
+        } finally {
+          inlineFileInput.value = "";
+        }
+      });
+
       document.getElementById("proj-gallery-list").appendChild(div);
     }
 
@@ -1221,7 +1443,7 @@ Membuat tekstur stylized"></textarea>
       (p.links || []).forEach(l => addLinkRow(l.label, l.url));
 
       document.getElementById("proj-gallery-list").innerHTML = "";
-      (p.gallery || []).forEach(g => addGalleryRow(g.img, g.caption));
+      (p.gallery || []).forEach(g => addGalleryRow(g.img, g.caption, g.detail || ""));
 
       openBackdrop("project-modal");
     }
@@ -1238,9 +1460,10 @@ Membuat tekstur stylized"></textarea>
         url: r.querySelector(".lnk-url").value.trim()
       })).filter(l => l.label && l.url);
 
-      const gallery = [...document.querySelectorAll("#proj-gallery-list .dynamic-row")].map(r => ({
+      const gallery = [...document.querySelectorAll("#proj-gallery-list .gallery-editor-card")].map(r => ({
         img: r.querySelector(".gal-img").value.trim(),
-        caption: r.querySelector(".gal-cap").value.trim()
+        caption: r.querySelector(".gal-cap").value.trim(),
+        detail: r.querySelector(".gal-detail").value.trim()
       })).filter(g => g.img);
 
       const newObj = {
@@ -1281,7 +1504,8 @@ Membuat tekstur stylized"></textarea>
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
-        document.querySelectorAll(".modal-backdrop.open").forEach(el => closeBackdrop(el.id));
+        const opened = [...document.querySelectorAll(".modal-backdrop.open")];
+        if (opened.length > 0) closeBackdrop(opened[opened.length - 1].id);
       }
     });
 
