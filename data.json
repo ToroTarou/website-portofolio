@@ -74,11 +74,13 @@
       "gallery": [
         {
           "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795716494296-animasi_in_game.gif",
-          "caption": "Preview Environment dan animasi player"
+          "caption": "Preview Environment dan animasi player",
+          "detail": "[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795717969822-animasi_aseprite_idle.gif]\n-Tahap 1  -> membuat sketsa aniamsi dulu dengan memisah misahkan tiap bagian badan agar lebih enak ketika dianimasika\n-  Tahap 2 -> mulai membuat karakter dengan sketsa sebaga referensi"
         },
         {
           "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795716648201-animasi_in_game.gif",
-          "caption": "aaa"
+          "caption": "aaa",
+          "detail": ""
         }
       ]
     }
