@@ -1,0 +1,63 @@
+{
+  "profile": {
+    "nama": "ToroTarou",
+    "peran": "2D & 3D Game Artist",
+    "tentang": "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine.",
+    "skills": [
+      "Blender",
+      "Unity",
+      "Godot",
+      "Substance Designer",
+      "3D Modeling",
+      "Texturing"
+    ],
+    "email": "emailkamu@gmail.com",
+    "sosmed": [
+      {
+        "label": "Itch.io",
+        "url": "https://itch.io"
+      },
+      {
+        "label": "ArtStation",
+        "url": "https://artstation.com"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/ToroTarou"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "title": "Nicholas Flight",
+      "year": "2026",
+      "role": "3D Environment & Prop Artist",
+      "tagline": "Klik kartu ini untuk melihat detail kontribusi. Login sebagai Admin di pojok bawah untuk mengedit langsung!",
+      "thumbnail": "https://placehold.co/800x450/1e293b/38bdf8?text=Thumbnail+Game+1",
+      "meta": {
+        "Peran": "3D Artist",
+        "Ukuran Tim": "4 Orang",
+        "Engine / Tools": "Aseprite",
+        "Durasi": "1 Minggu"
+      },
+      "links": [
+        {
+          "label": "Mainkan di Itch.io",
+          "url": "https://elcodante.itch.io/nicholas"
+        }
+      ],
+      "overview": "Nicholas bangun terlalu siang! Alarmnya tidak berbunyi dan waktu hampir habis. Jika dia tidak segera berangkat, dia akan terlambat!\n\nTapi sebelum pergi, ada satu masalah besar... koper Nicholas masih kosong!\n\nPemain harus membantu Nicholas menyusun berbagai barang ke dalam koper dengan ruang yang sangat terbatas. Setiap barang memiliki bentuk yang berbeda, jadi kamu harus memutar dan menempatkannya dengan cerdas agar semuanya muat.",
+      "contributions": [
+        "Membuat Animasi player",
+        "Membuat environment",
+        "Membuat asset ui judul dan asset kondisi you win/lose"
+      ],
+      "gallery": [
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795713104496-nich.png",
+          "caption": "Contoh foto breakdown atau wireframe."
+        }
+      ]
+    }
+  ]
+}
