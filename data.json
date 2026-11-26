@@ -74,7 +74,11 @@
       "gallery": [
         {
           "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795716494296-animasi_in_game.gif",
-          "caption": "Contoh foto breakdown atau wireframe."
+          "caption": "Preview Environment dan animasi player"
+        },
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795716648201-animasi_in_game.gif",
+          "caption": "aaa"
         }
       ]
     }
