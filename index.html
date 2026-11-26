@@ -12,6 +12,9 @@
       --muted: #6b7280;
       --border: #e5e7eb;
       --accent: #111827;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --green: #16a34a;
       --tag-bg: #f3f4f6;
       --radius: 12px;
     }
@@ -26,6 +29,70 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Admin Top Bar (Hanya muncul saat login) */
+    .admin-bar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: #111827;
+      color: #fff;
+      padding: 12px 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    }
+    .admin-bar.active { display: block; }
+    .admin-bar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .admin-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .badge-unsaved {
+      background: #f59e0b;
+      color: #111827;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      display: none;
+    }
+    .badge-unsaved.show { display: inline-block; }
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      font-family: inherit;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-success { background: var(--green); color: #fff; }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-light { background: #374151; color: #fff; }
+    .btn-outline { background: #fff; color: var(--text); border: 1px solid var(--border); }
+    .btn-sm { padding: 5px 10px; font-size: 0.78rem; }
+
     /* Container */
     .container {
       max-width: 1080px;
@@ -33,7 +100,7 @@
       padding: 0 24px;
     }
 
-    /* Navbar & Header (Simpel ala iamdeantate) */
+    /* Header (Simpel ala iamdeantate) */
     header {
       padding: 56px 0 40px;
       display: flex;
@@ -44,21 +111,9 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 48px;
     }
-    .brand h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-    }
-    .brand p {
-      color: var(--muted);
-      font-size: 1rem;
-      margin-top: 4px;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    .brand h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; }
+    .brand p { color: var(--muted); font-size: 1rem; margin-top: 4px; }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; }
     nav a {
       text-decoration: none;
       color: var(--muted);
@@ -68,7 +123,7 @@
     }
     nav a:hover { color: var(--text); }
 
-    /* Grid Game (Simpel, Fokus ke Visual) */
+    /* Grid Game */
     .section-label {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -92,18 +147,27 @@
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.07);
       border-color: #d1d5db;
     }
+    .card-admin-tools {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+      gap: 6px;
+    }
+    body.is-admin .card-admin-tools { display: flex; }
     .card-thumb {
       width: 100%;
       aspect-ratio: 16 / 9;
       background: #e5e7eb;
       overflow: hidden;
-      position: relative;
     }
     .card-thumb img {
       width: 100%;
@@ -112,9 +176,7 @@
       transition: transform 0.4s ease;
       display: block;
     }
-    .card:hover .card-thumb img {
-      transform: scale(1.04);
-    }
+    .card:hover .card-thumb img { transform: scale(1.04); }
     .card-body {
       padding: 18px 20px 20px;
       display: flex;
@@ -128,20 +190,9 @@
       align-items: baseline;
       gap: 12px;
     }
-    .card-title {
-      font-size: 1.15rem;
-      font-weight: 650;
-      letter-spacing: -0.01em;
-    }
-    .card-year {
-      font-size: 0.82rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .card-role {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
+    .card-title { font-size: 1.15rem; font-weight: 650; letter-spacing: -0.01em; }
+    .card-year { font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+    .card-role { font-size: 0.9rem; color: var(--muted); }
     .card-hint {
       margin-top: auto;
       padding-top: 12px;
@@ -149,7 +200,6 @@
       font-weight: 600;
       color: var(--text);
       opacity: 0.7;
-      transition: opacity 0.2s;
     }
     .card:hover .card-hint { opacity: 1; }
 
@@ -161,20 +211,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
     }
-    .about-section h2 {
-      font-size: 1.3rem;
-      margin-bottom: 12px;
-    }
-    .about-section p {
-      color: #374151;
-      font-size: 0.96rem;
-    }
-    .skills-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
+    .about-section h2 { font-size: 1.3rem; margin-bottom: 12px; }
+    .about-section p { color: #374151; font-size: 0.96rem; white-space: pre-line; }
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .tag {
       background: var(--tag-bg);
       color: #374151;
@@ -188,13 +227,24 @@
       padding: 28px 0 48px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
       gap: 12px;
       color: var(--muted);
       font-size: 0.88rem;
     }
+    .admin-login-trigger {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: underline;
+      opacity: 0.65;
+    }
+    .admin-login-trigger:hover { opacity: 1; color: var(--text); }
 
-    /* MODAL DETAIL (Informatif ala Gerlogu) */
+    /* Modal Umum */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -215,12 +265,13 @@
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-      animation: modalIn 0.22s ease;
+      animation: modalIn 0.2s ease;
       position: relative;
       margin-bottom: 32px;
     }
+    .modal.modal-sm { max-width: 460px; }
     @keyframes modalIn {
-      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .modal-close {
@@ -240,9 +291,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
     }
-    .modal-close:hover { background: #111827; }
     .modal-hero {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -250,9 +299,7 @@
       object-fit: cover;
       display: block;
     }
-    .modal-content {
-      padding: 32px;
-    }
+    .modal-content { padding: 32px; }
     .modal-header {
       display: flex;
       justify-content: space-between;
@@ -261,20 +308,9 @@
       gap: 16px;
       margin-bottom: 24px;
     }
-    .modal-header h2 {
-      font-size: 1.85rem;
-      letter-spacing: -0.02em;
-    }
-    .modal-tagline {
-      color: var(--muted);
-      margin-top: 4px;
-      font-size: 1rem;
-    }
-    .modal-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .modal-header h2 { font-size: 1.85rem; letter-spacing: -0.02em; }
+    .modal-tagline { color: var(--muted); margin-top: 4px; font-size: 1rem; }
+    .modal-links { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn-link {
       display: inline-block;
       padding: 9px 16px;
@@ -284,15 +320,8 @@
       text-decoration: none;
       background: var(--accent);
       color: #fff;
-      transition: opacity 0.2s;
     }
-    .btn-link.secondary {
-      background: var(--tag-bg);
-      color: var(--text);
-    }
-    .btn-link:hover { opacity: 0.85; }
-
-    /* Kotak Info Proyek (Role, Tim, Tools, Durasi) */
+    .btn-link.secondary { background: var(--tag-bg); color: var(--text); }
     .meta-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -312,32 +341,16 @@
       margin-bottom: 2px;
       font-weight: 600;
     }
-    .meta-item strong {
-      font-size: 0.93rem;
-      color: var(--text);
-    }
-
-    /* Isi Kontribusi */
-    .modal-section {
-      margin-bottom: 28px;
-    }
+    .meta-item strong { font-size: 0.93rem; color: var(--text); }
+    .modal-section { margin-bottom: 28px; }
     .modal-section h3 {
       font-size: 1.1rem;
       margin-bottom: 10px;
-      color: var(--text);
       border-left: 3px solid var(--accent);
       padding-left: 10px;
     }
-    .modal-section p {
-      color: #374151;
-      font-size: 0.96rem;
-    }
-    .contrib-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .modal-section p { color: #374151; font-size: 0.96rem; white-space: pre-line; }
+    .contrib-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .contrib-list li {
       position: relative;
       padding-left: 22px;
@@ -351,8 +364,6 @@
       color: var(--text);
       font-weight: 700;
     }
-
-    /* Galeri Breakdown di dalam Modal */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -371,14 +382,81 @@
       object-fit: cover;
       display: block;
     }
-    .gallery-caption {
-      padding: 8px 12px;
-      font-size: 0.82rem;
-      color: var(--muted);
+    .gallery-caption { padding: 8px 12px; font-size: 0.82rem; color: var(--muted); }
+
+    /* Form Editor Style */
+    .editor-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+    .editor-head h2 { font-size: 1.25rem; }
+    .editor-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    .editor-foot {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      background: #f9fafb;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 0.84rem; font-weight: 600; color: #374151; }
+    .field small { font-size: 0.77rem; color: var(--muted); }
+    .field input[type="text"],
+    .field input[type="password"],
+    .field input[type="email"],
+    .field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .upload-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .upload-box input[type="text"] { flex: 1; min-width: 180px; }
+    .dynamic-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      background: #f9fafb;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .dynamic-row input { flex: 1; min-width: 130px; }
+
+    /* Toast Notifikasi */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111827;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 2000;
+      display: none;
+      max-width: 380px;
+    }
+    .toast.show { display: block; }
 
     @media (max-width: 680px) {
-      .about-section { grid-template-columns: 1fr; }
+      .about-section, .form-row { grid-template-columns: 1fr; }
       .modal-content { padding: 20px; }
       header { padding: 36px 0 28px; }
     }
@@ -386,10 +464,27 @@
 </head>
 <body>
 
+  <!-- BAR ADMIN (Muncul otomatis setelah login) -->
+  <div class="admin-bar" id="admin-bar">
+    <div class="admin-bar-inner">
+      <div class="admin-status">
+        <span>Mode Admin Aktif</span>
+        <span class="badge-unsaved" id="unsaved-badge">Ada perubahan belum disimpan</span>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-light" id="btn-edit-profile">Edit Profil</button>
+        <button class="btn btn-primary" id="btn-add-project">+ Tambah Game</button>
+        <button class="btn btn-success" id="btn-publish">Simpan & Publish</button>
+        <button class="btn btn-danger" id="btn-logout">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HALAMAN UTAMA PORTOFOLIO -->
   <div class="container">
     <header>
       <div class="brand">
-        <h1 id="site-name"></h1>
+        <h1 id="site-name">Memuat...</h1>
         <p id="site-role"></p>
       </div>
       <nav id="site-nav"></nav>
@@ -413,14 +508,17 @@
 
     <footer id="contact">
       <div id="footer-copy"></div>
-      <div id="footer-links"></div>
+      <div style="display:flex; gap:16px; align-items:center;">
+        <span id="footer-links"></span>
+        <button class="admin-login-trigger" id="btn-open-login">Admin Login</button>
+      </div>
     </footer>
   </div>
 
-  <!-- Jendela Detail Game (Muncul saat kartu diklik) -->
-  <div class="modal-backdrop" id="modal-backdrop">
+  <!-- MODAL 1: DETAIL GAME (Untuk Pengunjung) -->
+  <div class="modal-backdrop" id="view-modal">
     <div class="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" id="modal-close" aria-label="Tutup">×</button>
+      <button class="modal-close" onclick="closeBackdrop('view-modal')">×</button>
       <img class="modal-hero" id="modal-hero" src="" alt="" />
       <div class="modal-content">
         <div class="modal-header">
@@ -430,19 +528,15 @@
           </div>
           <div class="modal-links" id="modal-links"></div>
         </div>
-
         <div class="meta-grid" id="modal-meta"></div>
-
         <div class="modal-section">
           <h3>Tentang Game</h3>
           <p id="modal-overview"></p>
         </div>
-
         <div class="modal-section">
           <h3>Kontribusi Saya</h3>
           <ul class="contrib-list" id="modal-contributions"></ul>
         </div>
-
         <div class="modal-section" id="modal-gallery-section">
           <h3>Showcase & Breakdown</h3>
           <div class="gallery-grid" id="modal-gallery"></div>
@@ -451,212 +545,734 @@
     </div>
   </div>
 
+  <!-- MODAL 2: LOGIN ADMIN -->
+  <div class="modal-backdrop" id="login-modal">
+    <div class="modal modal-sm">
+      <div class="editor-head">
+        <h2>Admin Login</h2>
+        <button class="btn btn-outline btn-sm" onclick="closeBackdrop('login-modal')">Tutup</button>
+      </div>
+      <div class="editor-body">
+        <div class="field">
+          <label for="input-token">Password Token GitHub</label>
+          <input type="password" id="input-token" placeholder="Tempel token github_pat_... di sini" />
+          <small>Token disimpan hanya di browser laptop kamu untuk menyimpan perubahan langsung ke repository <strong>ToroTarou/website-portofolio</strong>.</small>
+        </div>
+        <div id="login-error" style="color:var(--red); font-size:0.85rem; display:none;"></div>
+      </div>
+      <div class="editor-foot">
+        <button class="btn btn-outline" onclick="closeBackdrop('login-modal')">Batal</button>
+        <button class="btn btn-primary" id="btn-do-login">Masuk</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: EDIT PROFIL -->
+  <div class="modal-backdrop" id="profile-modal">
+    <div class="modal">
+      <div class="editor-head">
+        <h2>Edit Profil & Sosmed</h2>
+        <button class="btn btn-outline btn-sm" onclick="closeBackdrop('profile-modal')">Tutup</button>
+      </div>
+      <div class="editor-body">
+        <div class="form-row">
+          <div class="field">
+            <label>Nama Tampilan</label>
+            <input type="text" id="prof-nama" />
+          </div>
+          <div class="field">
+            <label>Peran / Spesialisasi</label>
+            <input type="text" id="prof-peran" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="prof-email" />
+        </div>
+        <div class="field">
+          <label>Tentang Saya</label>
+          <textarea id="prof-tentang"></textarea>
+        </div>
+        <div class="field">
+          <label>Tools & Keahlian</label>
+          <input type="text" id="prof-skills" placeholder="Blender, Unity, Godot, Substance Designer" />
+          <small>Pisahkan setiap keahlian dengan tanda koma (,)</small>
+        </div>
+        <div class="field">
+          <label>Link Sosmed / Portofolio Lain</label>
+          <div id="prof-sosmed-list"></div>
+          <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-sosmed">+ Tambah Link</button>
+        </div>
+      </div>
+      <div class="editor-foot">
+        <button class="btn btn-outline" onclick="closeBackdrop('profile-modal')">Batal</button>
+        <button class="btn btn-primary" id="btn-save-profile">Terapkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: TAMBAH / EDIT GAME -->
+  <div class="modal-backdrop" id="project-modal">
+    <div class="modal">
+      <div class="editor-head">
+        <h2 id="proj-modal-title">Edit Game</h2>
+        <button class="btn btn-outline btn-sm" onclick="closeBackdrop('project-modal')">Tutup</button>
+      </div>
+      <div class="editor-body">
+        <input type="hidden" id="proj-index" value="-1" />
+        <div class="form-row">
+          <div class="field">
+            <label>Judul Game / Proyek</label>
+            <input type="text" id="proj-title" placeholder="Contoh: Lake Strike" />
+          </div>
+          <div class="field">
+            <label>Tahun</label>
+            <input type="text" id="proj-year" placeholder="2026" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Peran Singkat (Muncul di Kartu Depan)</label>
+            <input type="text" id="proj-role" placeholder="3D Environment & Prop Artist" />
+          </div>
+          <div class="field">
+            <label>Tagline Singkat</label>
+            <input type="text" id="proj-tagline" placeholder="1 kalimat singkat tentang game ini" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Gambar Thumbnail Utama</label>
+          <div class="upload-box">
+            <input type="text" id="proj-thumb" placeholder="Link gambar atau klik Upload Gambar" />
+            <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+              Upload Gambar
+              <input type="file" accept="image/*" id="upload-thumb-input" style="display:none;" />
+            </label>
+          </div>
+          <small>Klik "Upload Gambar" untuk langsung mengirim gambar dari laptop ke GitHub.</small>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Info: Peran</label>
+            <input type="text" id="meta-peran" placeholder="3D Artist" />
+          </div>
+          <div class="field">
+            <label>Info: Ukuran Tim</label>
+            <input type="text" id="meta-tim" placeholder="5 Orang" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Info: Engine / Tools</label>
+            <input type="text" id="meta-tools" placeholder="Unity, Blender" />
+          </div>
+          <div class="field">
+            <label>Info: Durasi / Status</label>
+            <input type="text" id="meta-durasi" placeholder="3 Bulan" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Tentang Game</label>
+          <textarea id="proj-overview" placeholder="Jelaskan singkat game ini tentang apa..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Kontribusi Saya (1 baris = 1 poin)</label>
+          <textarea id="proj-contributions" style="min-height:120px;" placeholder="Membuat aset 3D environment di Blender
+Mengatur lighting di Unity
+Membuat tekstur stylized"></textarea>
+          <small>Tekan Enter untuk membuat poin kontribusi baru.</small>
+        </div>
+
+        <div class="field">
+          <label>Tombol Link (Itch.io / Trailer / GitHub)</label>
+          <div id="proj-links-list"></div>
+          <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-link">+ Tambah Tombol Link</button>
+        </div>
+
+        <div class="field">
+          <label>Galeri Breakdown / Screenshot Tambahan</label>
+          <div id="proj-gallery-list"></div>
+          <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-gallery">+ Tambah Foto Breakdown</button>
+        </div>
+      </div>
+      <div class="editor-foot">
+        <button class="btn btn-outline" onclick="closeBackdrop('project-modal')">Batal</button>
+        <button class="btn btn-primary" id="btn-save-project">Terapkan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
     // =========================================================================
-    //  EDIT DATA KAMU DI SINI (Cukup ubah teks di dalam tanda kutip "...")
+    //  KONFIGURASI REPOSITORY GITHUB KAMU
     // =========================================================================
+    const GITHUB_CONFIG = {
+      owner: "ToroTarou",
+      repo: "website-portofolio",
+      branch: "main",
+      dataFile: "data.json"
+    };
 
-    const PROFILE = {
-      nama: "ToroTarou",
-      peran: "2D & 3D Game Artist",
-      tentang: "Saya adalah mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine. Senang mengeksplorasi gaya stylized dan optimasi aset agar tetap ringan dijalankan.",
-      skills: ["Blender", "Unity", "Godot", "Substance Designer", "3D Modeling", "Texturing", "Environment Art", "Shader Dasar"],
-      email: "emailkamu@gmail.com",
-      // Link di pojok kanan atas & bawah (hapus baris yang tidak dipakai)
-      sosmed: [
-        { label: "Itch.io", url: "https://itch.io" },
-        { label: "ArtStation", url: "https://artstation.com" },
-        { label: "GitHub", url: "https://github.com/ToroTarou" },
-        { label: "LinkedIn", url: "https://linkedin.com" }
+    // Data awal sebelum kamu pernah klik "Simpan & Publish"
+    const DEFAULT_DATA = {
+      profile: {
+        nama: "ToroTarou",
+        peran: "2D & 3D Game Artist",
+        tentang: "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine.",
+        skills: ["Blender", "Unity", "Godot", "Substance Designer", "3D Modeling", "Texturing"],
+        email: "emailkamu@gmail.com",
+        sosmed: [
+          { label: "Itch.io", url: "https://itch.io" },
+          { label: "ArtStation", url: "https://artstation.com" },
+          { label: "GitHub", url: "https://github.com/ToroTarou" }
+        ]
+      },
+      projects: [
+        {
+          title: "Contoh Game Pertama",
+          year: "2026",
+          role: "3D Environment & Prop Artist",
+          tagline: "Klik kartu ini untuk melihat detail kontribusi. Login sebagai Admin di pojok bawah untuk mengedit langsung!",
+          thumbnail: "https://placehold.co/800x450/1e293b/38bdf8?text=Thumbnail+Game+1",
+          meta: {
+            "Peran": "3D Artist",
+            "Ukuran Tim": "5 Orang",
+            "Engine / Tools": "Unity, Blender",
+            "Durasi": "3 Bulan"
+          },
+          links: [
+            { label: "Mainkan di Itch.io", url: "https://itch.io" }
+          ],
+          overview: "Ini adalah proyek contoh. Setelah login sebagai Admin, kamu bisa mengedit teks ini, mengganti gambar langsung dari laptop, atau menghapusnya.",
+          contributions: [
+            "Membuat aset 3D environment modular di Blender.",
+            "Membuat tekstur stylized dan mengatur lighting di dalam game engine.",
+            "Mengoptimasi aset agar performa game tetap ringan."
+          ],
+          gallery: [
+            {
+              img: "https://placehold.co/600x375/0f172a/94a3b8?text=Screenshot+Breakdown",
+              caption: "Contoh foto breakdown atau wireframe."
+            }
+          ]
+        }
       ]
     };
 
-    // DAFTAR GAME / PROYEK
-    // Tips: Untuk pakai gambar sendiri, buat folder bernama "images" di samping index.html,
-    // taruh gambarnya di sana (misal: game1.jpg), lalu tulis thumbnail: "images/game1.jpg"
-    const PROJECTS = [
-      {
-        title: "Nama Game Pertama",
-        year: "2026",
-        role: "3D Environment & Prop Artist",
-        tagline: "Game petualangan 3D bergaya stylized yang dibuat bersama tim.",
-        thumbnail: "https://placehold.co/800x450/1e293b/38bdf8?text=Thumbnail+Game+1",
-        meta: {
-          "Peran": "3D Artist",
-          "Ukuran Tim": "5 Orang",
-          "Engine / Tools": "Unity, Blender, Substance",
-          "Durasi": "3 Bulan"
-        },
-        links: [
-          { label: "Mainkan di Itch.io", url: "https://itch.io", primary: true },
-          { label: "Lihat Trailer", url: "https://youtube.com", primary: false }
-        ],
-        overview: "Jelaskan secara singkat game ini tentang apa, genre-nya apa, dan dibuat dalam rangka apa (misalnya proyek kuliah, Tugas Akhir, atau Game Jam).",
-        contributions: [
-          "Membuat lebih dari 20 aset 3D environment modular (bangunan, pepohonan, bebatuan) di Blender dengan topologi low-poly yang rapi.",
-          "Membuat tekstur stylized dan material prosedural menggunakan Substance Designer.",
-          "Mengatur lighting, post-processing, dan penempatan aset (set dressing) langsung di dalam scene Unity.",
-          "Mengoptimasi jumlah draw call dan overdraw pada foliage agar performa stabil di 60 FPS."
-        ],
-        gallery: [
-          {
-            img: "https://placehold.co/600x375/0f172a/94a3b8?text=Screenshot+In-Game",
-            caption: "Tampilan environment final di dalam Unity."
-          },
-          {
-            img: "https://placehold.co/600x375/0f172a/94a3b8?text=Wireframe+%2F+Asset+Pack",
-            caption: "Breakdown aset props dan wireframe di Blender."
-          }
-        ]
-      },
-      {
-        title: "Nama Game Kedua",
-        year: "2025",
-        role: "2D Artist & UI Designer",
-        tagline: "Game 2D hasil karya Game Jam selama 48 jam.",
-        thumbnail: "https://placehold.co/800x450/312e81/c4b5fd?text=Thumbnail+Game+2",
-        meta: {
-          "Peran": "2D & UI Artist",
-          "Ukuran Tim": "4 Orang",
-          "Engine / Tools": "Unity, Photoshop",
-          "Durasi": "48 Jam (Game Jam)"
-        },
-        links: [
-          { label: "Halaman Game Jam", url: "https://itch.io", primary: true }
-        ],
-        overview: "Ceritakan konsep singkat game kedua kamu di sini. Pengunjung atau rekruter sangat suka membaca konteks singkat sebelum melihat kontribusi kamu.",
-        contributions: [
-          "Mendesain karakter utama lengkap dengan sprite animasi idle, jalan, dan lompat.",
-          "Membuat seluruh aset HUD, menu utama, ikon item, dan layar pause.",
-          "Menentukan palet warna agar karakter tetap kontras dan mudah dibaca terhadap background."
-        ],
-        gallery: [
-          {
-            img: "https://placehold.co/600x375/1e1b4b/a5b4fc?text=Sprite+Sheet+%26+UI",
-            caption: "Desain UI dan sprite karakter."
-          }
-        ]
-      },
-      {
-        title: "Eksperimen Water Shader",
-        year: "2026",
-        role: "Technical Art / Solo Project",
-        tagline: "Prototipe shader air interaktif dengan riak dinamis.",
-        thumbnail: "https://placehold.co/800x450/064e3b/6ee7b7?text=Thumbnail+Proyek+3",
-        meta: {
-          "Peran": "Solo Developer",
-          "Ukuran Tim": "1 Orang",
-          "Engine / Tools": "Unity / Godot",
-          "Status": "Prototipe"
-        },
-        links: [
-          { label: "Repository GitHub", url: "https://github.com/ToroTarou", primary: false }
-        ],
-        overview: "Selain game penuh, kamu juga bisa memajang proyek eksperimen seperti shader, tool, atau diorama 3D di sini.",
-        contributions: [
-          "Merancang sistem riak air yang bereaksi secara real-time saat objek menyentuh permukaan air.",
-          "Menyusun parameter warna, kecepatan ombak, dan skala riak agar mudah diatur di Inspector."
-        ],
-        gallery: [] // Biarkan kosong [] jika tidak ingin menampilkan galeri tambahan
+    // State Aplikasi
+    let SITE_DATA = structuredClone(DEFAULT_DATA);
+    let ADMIN_TOKEN = localStorage.getItem("gh_portfolio_token") || "";
+    let HAS_UNSAVED = false;
+
+    // Helper Utilitas
+    function showToast(msg, duration = 3500) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove("show"), duration);
+    }
+
+    function openBackdrop(id) {
+      const el = document.getElementById(id);
+      el.classList.add("open");
+      el.scrollTop = 0;
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeBackdrop(id) {
+      document.getElementById(id).classList.remove("open");
+      if (!document.querySelector(".modal-backdrop.open")) {
+        document.body.style.overflow = "";
       }
-    ];
+    }
 
-    // =========================================================================
-    //  AREA KODE OTOMATIS (Tidak perlu diubah)
-    // =========================================================================
+    function markUnsaved(flag = true) {
+      HAS_UNSAVED = flag;
+      document.getElementById("unsaved-badge").classList.toggle("show", flag);
+    }
 
-    document.title = `${PROFILE.nama} — ${PROFILE.peran}`;
-    document.getElementById("site-name").textContent = PROFILE.nama;
-    document.getElementById("site-role").textContent = PROFILE.peran;
-    document.getElementById("about-text").textContent = PROFILE.tentang;
-    document.getElementById("footer-copy").textContent = `© ${new Date().getFullYear()} ${PROFILE.nama}`;
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = "";
+      bytes.forEach(b => binary += String.fromCharCode(b));
+      return btoa(binary);
+    }
 
-    const navEl = document.getElementById("site-nav");
-    navEl.innerHTML = `<a href="#about">About</a>` +
-      PROFILE.sosmed.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("") +
-      `<a href="mailto:${PROFILE.email}">Email</a>`;
+    // Muat data dari data.json (jika sudah pernah disimpan)
+    async function loadData() {
+      try {
+        let res;
+        if (ADMIN_TOKEN) {
+          // Jika sedang login admin, ambil versi paling baru langsung dari API GitHub
+          res = await fetch(
+            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`,
+            { headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github.raw+json" } }
+          );
+        } else {
+          res = await fetch(`${GITHUB_CONFIG.dataFile}?t=${Date.now()}`);
+        }
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.profile && Array.isArray(json.projects)) {
+            SITE_DATA = json;
+          }
+        }
+      } catch (e) {
+        // Jika data.json belum ada, tetap pakai DEFAULT_DATA
+      }
+      renderSite();
+    }
 
-    document.getElementById("footer-links").innerHTML =
-      `<a href="mailto:${PROFILE.email}" style="color:inherit;text-decoration:none;">${PROFILE.email}</a>`;
+    // Render Halaman Utama
+    function renderSite() {
+      const p = SITE_DATA.profile;
+      document.title = `${p.nama} — ${p.peran}`;
+      document.getElementById("site-name").textContent = p.nama;
+      document.getElementById("site-role").textContent = p.peran;
+      document.getElementById("about-text").textContent = p.tentang;
+      document.getElementById("footer-copy").textContent = `© ${new Date().getFullYear()} ${p.nama}`;
 
-    document.getElementById("skills-list").innerHTML =
-      PROFILE.skills.map(skill => `<span class="tag">${skill}</span>`).join("");
+      document.getElementById("site-nav").innerHTML =
+        `<a href="#about">About</a>` +
+        (p.sosmed || []).map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("") +
+        (p.email ? `<a href="mailto:${p.email}">Email</a>` : "");
 
-    const gridEl = document.getElementById("projects-grid");
-    PROJECTS.forEach((proj, index) => {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="card-thumb">
-          <img src="${proj.thumbnail}" alt="${proj.title}" loading="lazy" />
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <h3 class="card-title">${proj.title}</h3>
-            <span class="card-year">${proj.year}</span>
+      document.getElementById("footer-links").innerHTML = p.email
+        ? `<a href="mailto:${p.email}" style="color:inherit;text-decoration:none;">${p.email}</a>`
+        : "";
+
+      document.getElementById("skills-list").innerHTML = (p.skills || [])
+        .map(sk => `<span class="tag">${sk}</span>`).join("");
+
+      const grid = document.getElementById("projects-grid");
+      grid.innerHTML = "";
+      SITE_DATA.projects.forEach((proj, idx) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-admin-tools">
+            <button class="btn btn-primary btn-sm" data-edit="${idx}">Edit</button>
+            <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
           </div>
-          <div class="card-role">${proj.role}</div>
-          <div class="card-hint">Lihat kontribusi →</div>
-        </div>
-      `;
-      card.addEventListener("click", () => openModal(index));
-      gridEl.appendChild(card);
-    });
+          <div class="card-thumb">
+            <img src="${proj.thumbnail}" alt="${proj.title}" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <h3 class="card-title">${proj.title}</h3>
+              <span class="card-year">${proj.year || ""}</span>
+            </div>
+            <div class="card-role">${proj.role || ""}</div>
+            <div class="card-hint">Lihat kontribusi →</div>
+          </div>
+        `;
+        card.addEventListener("click", (e) => {
+          if (e.target.closest("[data-edit]")) {
+            e.stopPropagation();
+            openProjectEditor(idx);
+          } else if (e.target.closest("[data-del]")) {
+            e.stopPropagation();
+            if (confirm(`Hapus proyek "${proj.title}"?`)) {
+              SITE_DATA.projects.splice(idx, 1);
+              markUnsaved(true);
+              renderSite();
+              showToast("Proyek dihapus. Klik 'Simpan & Publish' untuk menyimpan permanen.");
+            }
+          } else {
+            openViewModal(idx);
+          }
+        });
+        grid.appendChild(card);
+      });
+    }
 
-    const backdrop = document.getElementById("modal-backdrop");
-    const closeBtn = document.getElementById("modal-close");
-
-    function openModal(index) {
-      const p = PROJECTS[index];
+    // Modal Detail Pengunjung
+    function openViewModal(idx) {
+      const p = SITE_DATA.projects[idx];
       document.getElementById("modal-hero").src = p.thumbnail;
       document.getElementById("modal-hero").alt = p.title;
       document.getElementById("modal-title").textContent = p.title;
-      document.getElementById("modal-tagline").textContent = p.tagline;
-      document.getElementById("modal-overview").textContent = p.overview;
+      document.getElementById("modal-tagline").textContent = p.tagline || "";
+      document.getElementById("modal-overview").textContent = p.overview || "";
 
       document.getElementById("modal-links").innerHTML = (p.links || [])
-        .map(l => `<a class="btn-link ${l.primary ? "" : "secondary"}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
+        .filter(l => l.label && l.url)
+        .map((l, i) => `<a class="btn-link ${i === 0 ? "" : "secondary"}" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
         .join("");
 
       document.getElementById("modal-meta").innerHTML = Object.entries(p.meta || {})
+        .filter(([k, v]) => v)
         .map(([k, v]) => `<div class="meta-item"><span>${k}</span><strong>${v}</strong></div>`)
         .join("");
 
       document.getElementById("modal-contributions").innerHTML = (p.contributions || [])
-        .map(c => `<li>${c}</li>`)
-        .join("");
+        .map(c => `<li>${c}</li>`).join("");
 
-      const galSection = document.getElementById("modal-gallery-section");
+      const galSec = document.getElementById("modal-gallery-section");
       const galEl = document.getElementById("modal-gallery");
-      if (p.gallery && p.gallery.length > 0) {
-        galSection.style.display = "block";
-        galEl.innerHTML = p.gallery.map(g => `
+      const validGal = (p.gallery || []).filter(g => g.img);
+      if (validGal.length > 0) {
+        galSec.style.display = "block";
+        galEl.innerHTML = validGal.map(g => `
           <div class="gallery-item">
             <img src="${g.img}" alt="${g.caption || p.title}" loading="lazy" />
             ${g.caption ? `<div class="gallery-caption">${g.caption}</div>` : ""}
           </div>
         `).join("");
       } else {
-        galSection.style.display = "none";
+        galSec.style.display = "none";
+      }
+      openBackdrop("view-modal");
+    }
+
+    // =========================================================================
+    //  SISTEM LOGIN & API GITHUB
+    // =========================================================================
+    function setAdminUI(active) {
+      document.body.classList.toggle("is-admin", active);
+      document.getElementById("admin-bar").classList.toggle("active", active);
+      document.getElementById("btn-open-login").style.display = active ? "none" : "inline";
+    }
+
+    document.getElementById("btn-open-login").addEventListener("click", () => {
+      document.getElementById("login-error").style.display = "none";
+      document.getElementById("input-token").value = "";
+      openBackdrop("login-modal");
+    });
+
+    document.getElementById("btn-do-login").addEventListener("click", async () => {
+      const token = document.getElementById("input-token").value.trim();
+      const errEl = document.getElementById("login-error");
+      if (!token) {
+        errEl.textContent = "Masukkan token GitHub terlebih dahulu.";
+        errEl.style.display = "block";
+        return;
+      }
+      const btn = document.getElementById("btn-do-login");
+      btn.disabled = true;
+      btn.textContent = "Memeriksa...";
+      errEl.style.display = "none";
+
+      try {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }
+        });
+        if (!res.ok) throw new Error("Token tidak valid atau tidak punya akses ke repository ini.");
+        const repoData = await res.json();
+        if (!repoData.permissions || !repoData.permissions.push) {
+          throw new Error("Token valid, tapi belum diberi izin 'Contents: Read and write'.");
+        }
+        ADMIN_TOKEN = token;
+        localStorage.setItem("gh_portfolio_token", token);
+        setAdminUI(true);
+        closeBackdrop("login-modal");
+        await loadData();
+        showToast("Berhasil login sebagai Admin!");
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Masuk";
+      }
+    });
+
+    document.getElementById("btn-logout").addEventListener("click", () => {
+      if (HAS_UNSAVED && !confirm("Ada perubahan yang belum di-publish. Tetap logout?")) return;
+      ADMIN_TOKEN = "";
+      localStorage.removeItem("gh_portfolio_token");
+      markUnsaved(false);
+      setAdminUI(false);
+      showToast("Berhasil logout.");
+    });
+
+    // Upload Gambar langsung ke folder images/ di GitHub
+    async function uploadImageToGitHub(file) {
+      if (!ADMIN_TOKEN) throw new Error("Harus login terlebih dahulu.");
+      const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+      const path = `images/${safeName}`;
+
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${ADMIN_TOKEN}`,
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: `Upload gambar ${safeName}`,
+          content: base64,
+          branch: GITHUB_CONFIG.branch
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Gagal upload gambar ke GitHub.");
       }
 
-      backdrop.classList.add("open");
-      backdrop.scrollTop = 0;
-      document.body.style.overflow = "hidden";
+      // Gunakan raw.githubusercontent.com agar gambar langsung tampil seketika tanpa menunggu build
+      return `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${path}`;
     }
 
-    function closeModal() {
-      backdrop.classList.remove("open");
-      document.body.style.overflow = "";
+    // Simpan & Publish data.json ke GitHub
+    document.getElementById("btn-publish").addEventListener("click", async () => {
+      const btn = document.getElementById("btn-publish");
+      btn.disabled = true;
+      btn.textContent = "Menyimpan...";
+      try {
+        const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
+        let sha = undefined;
+        const getRes = await fetch(`${url}?ref=${GITHUB_CONFIG.branch}`, {
+          headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github+json" }
+        });
+        if (getRes.ok) {
+          const existing = await getRes.json();
+          sha = existing.sha;
+        }
+
+        const jsonStr = JSON.stringify(SITE_DATA, null, 2);
+        const putRes = await fetch(url, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${ADMIN_TOKEN}`,
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "Update portofolio via Web Admin",
+            content: utf8ToBase64(jsonStr),
+            sha,
+            branch: GITHUB_CONFIG.branch
+          })
+        });
+
+        if (!putRes.ok) {
+          const err = await putRes.json().catch(() => ({}));
+          throw new Error(err.message || "Gagal menyimpan ke GitHub.");
+        }
+
+        markUnsaved(false);
+        showToast("Berhasil disimpan ke GitHub! Tunggu 1–2 menit agar pengunjung melihat versi terbaru.", 5000);
+      } catch (err) {
+        alert("Error: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Simpan & Publish";
+      }
+    });
+
+    // =========================================================================
+    //  EDITOR PROFIL
+    // =========================================================================
+    function addSosmedRow(label = "", url = "") {
+      const div = document.createElement("div");
+      div.className = "dynamic-row";
+      div.innerHTML = `
+        <input type="text" class="sos-label" placeholder="Nama (misal: Itch.io)" value="${label}" />
+        <input type="text" class="sos-url" placeholder="https://..." value="${url}" />
+        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
+      `;
+      document.getElementById("prof-sosmed-list").appendChild(div);
     }
 
-    closeBtn.addEventListener("click", closeModal);
-    backdrop.addEventListener("click", (e) => {
-      if (e.target === backdrop) closeModal();
+    document.getElementById("btn-add-sosmed").addEventListener("click", () => addSosmedRow());
+
+    document.getElementById("btn-edit-profile").addEventListener("click", () => {
+      const p = SITE_DATA.profile;
+      document.getElementById("prof-nama").value = p.nama || "";
+      document.getElementById("prof-peran").value = p.peran || "";
+      document.getElementById("prof-email").value = p.email || "";
+      document.getElementById("prof-tentang").value = p.tentang || "";
+      document.getElementById("prof-skills").value = (p.skills || []).join(", ");
+      const list = document.getElementById("prof-sosmed-list");
+      list.innerHTML = "";
+      (p.sosmed || []).forEach(s => addSosmedRow(s.label, s.url));
+      openBackdrop("profile-modal");
+    });
+
+    document.getElementById("btn-save-profile").addEventListener("click", () => {
+      const sosmed = [...document.querySelectorAll("#prof-sosmed-list .dynamic-row")].map(row => ({
+        label: row.querySelector(".sos-label").value.trim(),
+        url: row.querySelector(".sos-url").value.trim()
+      })).filter(s => s.label && s.url);
+
+      SITE_DATA.profile = {
+        nama: document.getElementById("prof-nama").value.trim() || "Portofolio",
+        peran: document.getElementById("prof-peran").value.trim(),
+        email: document.getElementById("prof-email").value.trim(),
+        tentang: document.getElementById("prof-tentang").value.trim(),
+        skills: document.getElementById("prof-skills").value.split(",").map(s => s.trim()).filter(Boolean),
+        sosmed
+      };
+      markUnsaved(true);
+      renderSite();
+      closeBackdrop("profile-modal");
+      showToast("Profil diperbarui! Jangan lupa klik 'Simpan & Publish'.");
+    });
+
+    // =========================================================================
+    //  EDITOR PROYEK / GAME
+    // =========================================================================
+    function addLinkRow(label = "", url = "") {
+      const div = document.createElement("div");
+      div.className = "dynamic-row";
+      div.innerHTML = `
+        <input type="text" class="lnk-label" placeholder="Teks Tombol (misal: Mainkan)" value="${label}" />
+        <input type="text" class="lnk-url" placeholder="https://..." value="${url}" />
+        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
+      `;
+      document.getElementById("proj-links-list").appendChild(div);
+    }
+
+    function addGalleryRow(img = "", caption = "") {
+      const div = document.createElement("div");
+      div.className = "dynamic-row";
+      div.innerHTML = `
+        <input type="text" class="gal-img" placeholder="URL gambar atau Upload" value="${img}" />
+        <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+          Upload
+          <input type="file" accept="image/*" style="display:none;" />
+        </label>
+        <input type="text" class="gal-cap" placeholder="Keterangan foto" value="${caption}" />
+        <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
+      `;
+      const fileInput = div.querySelector('input[type="file"]');
+      const urlInput = div.querySelector(".gal-img");
+      fileInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        showToast("Meng-upload foto breakdown...");
+        try {
+          urlInput.value = await uploadImageToGitHub(file);
+          showToast("Foto berhasil di-upload!");
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+      document.getElementById("proj-gallery-list").appendChild(div);
+    }
+
+    document.getElementById("btn-add-link").addEventListener("click", () => addLinkRow());
+    document.getElementById("btn-add-gallery").addEventListener("click", () => addGalleryRow());
+
+    document.getElementById("upload-thumb-input").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      showToast("Meng-upload thumbnail ke GitHub...");
+      try {
+        document.getElementById("proj-thumb").value = await uploadImageToGitHub(file);
+        showToast("Thumbnail berhasil di-upload!");
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    function openProjectEditor(idx = -1) {
+      document.getElementById("proj-index").value = idx;
+      document.getElementById("proj-modal-title").textContent = idx === -1 ? "Tambah Game Baru" : "Edit Game";
+      const p = idx === -1 ? {
+        title: "", year: new Date().getFullYear().toString(), role: "", tagline: "",
+        thumbnail: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
+      } : SITE_DATA.projects[idx];
+
+      document.getElementById("proj-title").value = p.title || "";
+      document.getElementById("proj-year").value = p.year || "";
+      document.getElementById("proj-role").value = p.role || "";
+      document.getElementById("proj-tagline").value = p.tagline || "";
+      document.getElementById("proj-thumb").value = p.thumbnail || "";
+      document.getElementById("meta-peran").value = p.meta?.["Peran"] || "";
+      document.getElementById("meta-tim").value = p.meta?.["Ukuran Tim"] || "";
+      document.getElementById("meta-tools").value = p.meta?.["Engine / Tools"] || "";
+      document.getElementById("meta-durasi").value = p.meta?.["Durasi"] || "";
+      document.getElementById("proj-overview").value = p.overview || "";
+      document.getElementById("proj-contributions").value = (p.contributions || []).join("\n");
+
+      document.getElementById("proj-links-list").innerHTML = "";
+      (p.links || []).forEach(l => addLinkRow(l.label, l.url));
+
+      document.getElementById("proj-gallery-list").innerHTML = "";
+      (p.gallery || []).forEach(g => addGalleryRow(g.img, g.caption));
+
+      openBackdrop("project-modal");
+    }
+
+    document.getElementById("btn-add-project").addEventListener("click", () => openProjectEditor(-1));
+
+    document.getElementById("btn-save-project").addEventListener("click", () => {
+      const idx = parseInt(document.getElementById("proj-index").value, 10);
+      const title = document.getElementById("proj-title").value.trim();
+      if (!title) { alert("Judul game wajib diisi."); return; }
+
+      const links = [...document.querySelectorAll("#proj-links-list .dynamic-row")].map(r => ({
+        label: r.querySelector(".lnk-label").value.trim(),
+        url: r.querySelector(".lnk-url").value.trim()
+      })).filter(l => l.label && l.url);
+
+      const gallery = [...document.querySelectorAll("#proj-gallery-list .dynamic-row")].map(r => ({
+        img: r.querySelector(".gal-img").value.trim(),
+        caption: r.querySelector(".gal-cap").value.trim()
+      })).filter(g => g.img);
+
+      const newObj = {
+        title,
+        year: document.getElementById("proj-year").value.trim(),
+        role: document.getElementById("proj-role").value.trim(),
+        tagline: document.getElementById("proj-tagline").value.trim(),
+        thumbnail: document.getElementById("proj-thumb").value.trim() || "https://placehold.co/800x450/1e293b/ffffff?text=No+Image",
+        meta: {
+          "Peran": document.getElementById("meta-peran").value.trim(),
+          "Ukuran Tim": document.getElementById("meta-tim").value.trim(),
+          "Engine / Tools": document.getElementById("meta-tools").value.trim(),
+          "Durasi": document.getElementById("meta-durasi").value.trim()
+        },
+        links,
+        overview: document.getElementById("proj-overview").value.trim(),
+        contributions: document.getElementById("proj-contributions").value.split("\n").map(s => s.trim()).filter(Boolean),
+        gallery
+      };
+
+      if (idx === -1) {
+        SITE_DATA.projects.unshift(newObj);
+      } else {
+        SITE_DATA.projects[idx] = newObj;
+      }
+
+      markUnsaved(true);
+      renderSite();
+      closeBackdrop("project-modal");
+      showToast("Perubahan diterapkan! Klik 'Simpan & Publish' di atas agar online.");
+    });
+
+    // Tutup modal jika klik area gelap atau tekan ESC
+    document.querySelectorAll(".modal-backdrop").forEach(el => {
+      el.addEventListener("click", (e) => {
+        if (e.target === el) closeBackdrop(el.id);
+      });
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-backdrop.open").forEach(el => closeBackdrop(el.id));
+      }
     });
+
+    // Inisialisasi
+    if (ADMIN_TOKEN) setAdminUI(true);
+    loadData();
   </script>
 </body>
 </html>
