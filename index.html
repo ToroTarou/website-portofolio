@@ -922,13 +922,14 @@ Membuat aset UI"></textarea>
       document.getElementById("unsaved-badge").classList.toggle("show", flag);
     }
 
-    function escapeHtml(str) {
-      return String(str || "")
-        .replace(/&/g, "&")
-        .replace(/</g, "<")
-        .replace(/>/g, ">")
-        .replace(/"/g, """);
-    }
+   function escapeHtml(str) {
+  const am = "&";
+  return String(str || "")
+    .replace(/&/g, am + "amp;")
+    .replace(/</g, am + "lt;")
+    .replace(/>/g, am + "gt;")
+    .replace(/"/g, am + "quot;");
+}
 
     function utf8ToBase64(str) {
       const bytes = new TextEncoder().encode(str);
