@@ -18,12 +18,12 @@
         "url": "https://itch.io"
       },
       {
-        "label": "ArtStation",
-        "url": "https://artstation.com"
-      },
-      {
         "label": "GitHub",
         "url": "https://github.com/ToroTarou"
+      },
+      {
+        "label": "Gmail",
+        "url": "muhammadzidhan13@gmail.com"
       }
     ],
     "thumbRatio": "contain"
