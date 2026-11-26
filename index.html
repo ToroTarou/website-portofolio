@@ -29,7 +29,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Admin Top Bar (Hanya muncul saat login) */
+    /* Admin Top Bar */
     .admin-bar {
       display: none;
       position: sticky;
@@ -70,6 +70,18 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
+    }
+    .admin-select {
+      background: #1f2937;
+      color: #fff;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 0.84rem;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
     }
 
     /* Buttons */
@@ -100,7 +112,7 @@
       padding: 0 24px;
     }
 
-    /* Header (Simpel ala iamdeantate) */
+    /* Header */
     header {
       padding: 56px 0 40px;
       display: flex;
@@ -137,6 +149,7 @@
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 28px;
       margin-bottom: 72px;
+      align-items: start;
     }
     .card {
       background: var(--surface);
@@ -165,7 +178,7 @@
     body.is-admin .card-admin-tools { display: flex; }
     .card-thumb {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 630 / 500;
       background: #e5e7eb;
       overflow: hidden;
     }
@@ -294,9 +307,9 @@
     }
     .modal-hero {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #1f2937;
-      object-fit: cover;
+      max-height: 480px;
+      background: #111827;
+      object-fit: contain;
       display: block;
     }
     .modal-content { padding: 32px; }
@@ -409,6 +422,7 @@
     .field input[type="text"],
     .field input[type="password"],
     .field input[type="email"],
+    .field select,
     .field textarea {
       width: 100%;
       padding: 9px 12px;
@@ -416,6 +430,7 @@
       border-radius: 8px;
       font-family: inherit;
       font-size: 0.92rem;
+      background: #fff;
     }
     .field textarea { min-height: 90px; resize: vertical; }
     .upload-box {
@@ -464,7 +479,7 @@
 </head>
 <body>
 
-  <!-- BAR ADMIN (Muncul otomatis setelah login) -->
+  <!-- BAR ADMIN -->
   <div class="admin-bar" id="admin-bar">
     <div class="admin-bar-inner">
       <div class="admin-status">
@@ -472,6 +487,13 @@
         <span class="badge-unsaved" id="unsaved-badge">Ada perubahan belum disimpan</span>
       </div>
       <div class="admin-actions">
+        <select class="admin-select" id="admin-ratio-select" title="Rasio Thumbnail Pajangan">
+          <option value="630 / 500">Rasio: Itch.io (630×500)</option>
+          <option value="16 / 9">Rasio: Widescreen (16:9)</option>
+          <option value="4 / 3">Rasio: Klasik (4:3)</option>
+          <option value="1 / 1">Rasio: Kotak (1:1)</option>
+          <option value="contain">Rasio: Utuh (Tidak Terpotong)</option>
+        </select>
         <button class="btn btn-light" id="btn-edit-profile">Edit Profil</button>
         <button class="btn btn-primary" id="btn-add-project">+ Tambah Game</button>
         <button class="btn btn-success" id="btn-publish">Simpan & Publish</button>
@@ -515,7 +537,7 @@
     </footer>
   </div>
 
-  <!-- MODAL 1: DETAIL GAME (Untuk Pengunjung) -->
+  <!-- MODAL 1: DETAIL GAME -->
   <div class="modal-backdrop" id="view-modal">
     <div class="modal" role="dialog" aria-modal="true">
       <button class="modal-close" onclick="closeBackdrop('view-modal')">×</button>
@@ -641,16 +663,28 @@
           </div>
         </div>
 
-        <div class="field">
-          <label>Gambar Thumbnail Utama</label>
-          <div class="upload-box">
-            <input type="text" id="proj-thumb" placeholder="Link gambar atau klik Upload Gambar" />
-            <label class="btn btn-outline btn-sm" style="cursor:pointer;">
-              Upload Gambar
-              <input type="file" accept="image/*" id="upload-thumb-input" style="display:none;" />
-            </label>
+        <div class="form-row">
+          <div class="field">
+            <label>Gambar Thumbnail Utama</label>
+            <div class="upload-box">
+              <input type="text" id="proj-thumb" placeholder="Link gambar atau klik Upload" />
+              <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+                Upload Gambar
+                <input type="file" accept="image/*" id="upload-thumb-input" style="display:none;" />
+              </label>
+            </div>
           </div>
-          <small>Klik "Upload Gambar" untuk langsung mengirim gambar dari laptop ke GitHub.</small>
+          <div class="field">
+            <label>Rasio Thumbnail Kartu Ini</label>
+            <select id="proj-ratio">
+              <option value="">Ikuti Pengaturan Bar Admin (Default)</option>
+              <option value="630 / 500">Itch.io (630×500)</option>
+              <option value="16 / 9">Widescreen (16:9)</option>
+              <option value="4 / 3">Klasik (4:3)</option>
+              <option value="1 / 1">Kotak (1:1)</option>
+              <option value="contain">Utuh / Tidak Terpotong</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-row">
@@ -709,9 +743,6 @@ Membuat tekstur stylized"></textarea>
   <div class="toast" id="toast"></div>
 
   <script>
-    // =========================================================================
-    //  KONFIGURASI REPOSITORY GITHUB KAMU
-    // =========================================================================
     const GITHUB_CONFIG = {
       owner: "ToroTarou",
       repo: "website-portofolio",
@@ -719,7 +750,6 @@ Membuat tekstur stylized"></textarea>
       dataFile: "data.json"
     };
 
-    // Data awal sebelum kamu pernah klik "Simpan & Publish"
     const DEFAULT_DATA = {
       profile: {
         nama: "ToroTarou",
@@ -727,50 +757,20 @@ Membuat tekstur stylized"></textarea>
         tentang: "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine.",
         skills: ["Blender", "Unity", "Godot", "Substance Designer", "3D Modeling", "Texturing"],
         email: "emailkamu@gmail.com",
+        thumbRatio: "630 / 500",
         sosmed: [
           { label: "Itch.io", url: "https://itch.io" },
           { label: "ArtStation", url: "https://artstation.com" },
           { label: "GitHub", url: "https://github.com/ToroTarou" }
         ]
       },
-      projects: [
-        {
-          title: "Contoh Game Pertama",
-          year: "2026",
-          role: "3D Environment & Prop Artist",
-          tagline: "Klik kartu ini untuk melihat detail kontribusi. Login sebagai Admin di pojok bawah untuk mengedit langsung!",
-          thumbnail: "https://placehold.co/800x450/1e293b/38bdf8?text=Thumbnail+Game+1",
-          meta: {
-            "Peran": "3D Artist",
-            "Ukuran Tim": "5 Orang",
-            "Engine / Tools": "Unity, Blender",
-            "Durasi": "3 Bulan"
-          },
-          links: [
-            { label: "Mainkan di Itch.io", url: "https://itch.io" }
-          ],
-          overview: "Ini adalah proyek contoh. Setelah login sebagai Admin, kamu bisa mengedit teks ini, mengganti gambar langsung dari laptop, atau menghapusnya.",
-          contributions: [
-            "Membuat aset 3D environment modular di Blender.",
-            "Membuat tekstur stylized dan mengatur lighting di dalam game engine.",
-            "Mengoptimasi aset agar performa game tetap ringan."
-          ],
-          gallery: [
-            {
-              img: "https://placehold.co/600x375/0f172a/94a3b8?text=Screenshot+Breakdown",
-              caption: "Contoh foto breakdown atau wireframe."
-            }
-          ]
-        }
-      ]
+      projects: []
     };
 
-    // State Aplikasi
     let SITE_DATA = structuredClone(DEFAULT_DATA);
     let ADMIN_TOKEN = localStorage.getItem("gh_portfolio_token") || "";
     let HAS_UNSAVED = false;
 
-    // Helper Utilitas
     function showToast(msg, duration = 3500) {
       const t = document.getElementById("toast");
       t.textContent = msg;
@@ -805,34 +805,40 @@ Membuat tekstur stylized"></textarea>
       return btoa(binary);
     }
 
-    // Muat data dari data.json (jika sudah pernah disimpan)
     async function loadData() {
       try {
         let res;
         if (ADMIN_TOKEN) {
-          // Jika sedang login admin, ambil versi paling baru langsung dari API GitHub
           res = await fetch(
             `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`,
-            { headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github.raw+json" } }
+            {
+              cache: "no-store",
+              headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github.raw+json" }
+            }
           );
         } else {
-          res = await fetch(`${GITHUB_CONFIG.dataFile}?t=${Date.now()}`);
+          res = await fetch(`${GITHUB_CONFIG.dataFile}?t=${Date.now()}`, { cache: "no-store" });
         }
         if (res.ok) {
           const json = await res.json();
           if (json && json.profile && Array.isArray(json.projects)) {
             SITE_DATA = json;
+            if (!SITE_DATA.profile.thumbRatio) {
+              SITE_DATA.profile.thumbRatio = "630 / 500";
+            }
           }
         }
-      } catch (e) {
-        // Jika data.json belum ada, tetap pakai DEFAULT_DATA
-      }
+      } catch (e) {}
       renderSite();
     }
 
-    // Render Halaman Utama
     function renderSite() {
       const p = SITE_DATA.profile;
+      const globalRatio = p.thumbRatio || "630 / 500";
+
+      const ratioSel = document.getElementById("admin-ratio-select");
+      if (ratioSel) ratioSel.value = globalRatio;
+
       document.title = `${p.nama} — ${p.peran}`;
       document.getElementById("site-name").textContent = p.nama;
       document.getElementById("site-role").textContent = p.peran;
@@ -854,6 +860,13 @@ Membuat tekstur stylized"></textarea>
       const grid = document.getElementById("projects-grid");
       grid.innerHTML = "";
       SITE_DATA.projects.forEach((proj, idx) => {
+        const activeRatio = proj.thumbRatio || globalRatio;
+        const isContain = activeRatio === "contain";
+        const boxStyle = isContain
+          ? "aspect-ratio: 630 / 500; background: #111827;"
+          : `aspect-ratio: ${activeRatio};`;
+        const imgStyle = isContain ? "object-fit: contain;" : "object-fit: cover;";
+
         const card = document.createElement("article");
         card.className = "card";
         card.innerHTML = `
@@ -861,8 +874,8 @@ Membuat tekstur stylized"></textarea>
             <button class="btn btn-primary btn-sm" data-edit="${idx}">Edit</button>
             <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
           </div>
-          <div class="card-thumb">
-            <img src="${proj.thumbnail}" alt="${proj.title}" loading="lazy" />
+          <div class="card-thumb" style="${boxStyle}">
+            <img src="${proj.thumbnail}" alt="${proj.title}" style="${imgStyle}" loading="lazy" />
           </div>
           <div class="card-body">
             <div class="card-top">
@@ -893,11 +906,11 @@ Membuat tekstur stylized"></textarea>
       });
     }
 
-    // Modal Detail Pengunjung
     function openViewModal(idx) {
       const p = SITE_DATA.projects[idx];
-      document.getElementById("modal-hero").src = p.thumbnail;
-      document.getElementById("modal-hero").alt = p.title;
+      const hero = document.getElementById("modal-hero");
+      hero.src = p.thumbnail;
+      hero.alt = p.title;
       document.getElementById("modal-title").textContent = p.title;
       document.getElementById("modal-tagline").textContent = p.tagline || "";
       document.getElementById("modal-overview").textContent = p.overview || "";
@@ -932,9 +945,15 @@ Membuat tekstur stylized"></textarea>
       openBackdrop("view-modal");
     }
 
-    // =========================================================================
-    //  SISTEM LOGIN & API GITHUB
-    // =========================================================================
+    // Ganti Rasio Global dari Bar Admin
+    document.getElementById("admin-ratio-select").addEventListener("change", (e) => {
+      SITE_DATA.profile.thumbRatio = e.target.value;
+      markUnsaved(true);
+      renderSite();
+      showToast("Rasio pajangan diubah! Klik 'Simpan & Publish' agar tersimpan.");
+    });
+
+    // SISTEM LOGIN & API GITHUB
     function setAdminUI(active) {
       document.body.classList.toggle("is-admin", active);
       document.getElementById("admin-bar").classList.toggle("active", active);
@@ -993,7 +1012,6 @@ Membuat tekstur stylized"></textarea>
       showToast("Berhasil logout.");
     });
 
-    // Upload Gambar langsung ke folder images/ di GitHub
     async function uploadImageToGitHub(file) {
       if (!ADMIN_TOKEN) throw new Error("Harus login terlebih dahulu.");
       const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
@@ -1025,11 +1043,9 @@ Membuat tekstur stylized"></textarea>
         throw new Error(err.message || "Gagal upload gambar ke GitHub.");
       }
 
-      // Gunakan raw.githubusercontent.com agar gambar langsung tampil seketika tanpa menunggu build
       return `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${path}`;
     }
 
-    // Simpan & Publish data.json ke GitHub
     document.getElementById("btn-publish").addEventListener("click", async () => {
       const btn = document.getElementById("btn-publish");
       btn.disabled = true;
@@ -1038,9 +1054,9 @@ Membuat tekstur stylized"></textarea>
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         let sha = undefined;
         const getRes = await fetch(`${url}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`, {
-  cache: "no-store",
-  headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github+json" }
-});
+          cache: "no-store",
+          headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github+json" }
+        });
         if (getRes.ok) {
           const existing = await getRes.json();
           sha = existing.sha;
@@ -1077,9 +1093,7 @@ Membuat tekstur stylized"></textarea>
       }
     });
 
-    // =========================================================================
-    //  EDITOR PROFIL
-    // =========================================================================
+    // EDITOR PROFIL
     function addSosmedRow(label = "", url = "") {
       const div = document.createElement("div");
       div.className = "dynamic-row";
@@ -1113,6 +1127,7 @@ Membuat tekstur stylized"></textarea>
       })).filter(s => s.label && s.url);
 
       SITE_DATA.profile = {
+        ...SITE_DATA.profile,
         nama: document.getElementById("prof-nama").value.trim() || "Portofolio",
         peran: document.getElementById("prof-peran").value.trim(),
         email: document.getElementById("prof-email").value.trim(),
@@ -1126,9 +1141,7 @@ Membuat tekstur stylized"></textarea>
       showToast("Profil diperbarui! Jangan lupa klik 'Simpan & Publish'.");
     });
 
-    // =========================================================================
-    //  EDITOR PROYEK / GAME
-    // =========================================================================
+    // EDITOR PROYEK / GAME
     function addLinkRow(label = "", url = "") {
       const div = document.createElement("div");
       div.className = "dynamic-row";
@@ -1188,7 +1201,7 @@ Membuat tekstur stylized"></textarea>
       document.getElementById("proj-modal-title").textContent = idx === -1 ? "Tambah Game Baru" : "Edit Game";
       const p = idx === -1 ? {
         title: "", year: new Date().getFullYear().toString(), role: "", tagline: "",
-        thumbnail: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
+        thumbnail: "", thumbRatio: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
       } : SITE_DATA.projects[idx];
 
       document.getElementById("proj-title").value = p.title || "";
@@ -1196,6 +1209,7 @@ Membuat tekstur stylized"></textarea>
       document.getElementById("proj-role").value = p.role || "";
       document.getElementById("proj-tagline").value = p.tagline || "";
       document.getElementById("proj-thumb").value = p.thumbnail || "";
+      document.getElementById("proj-ratio").value = p.thumbRatio || "";
       document.getElementById("meta-peran").value = p.meta?.["Peran"] || "";
       document.getElementById("meta-tim").value = p.meta?.["Ukuran Tim"] || "";
       document.getElementById("meta-tools").value = p.meta?.["Engine / Tools"] || "";
@@ -1234,7 +1248,8 @@ Membuat tekstur stylized"></textarea>
         year: document.getElementById("proj-year").value.trim(),
         role: document.getElementById("proj-role").value.trim(),
         tagline: document.getElementById("proj-tagline").value.trim(),
-        thumbnail: document.getElementById("proj-thumb").value.trim() || "https://placehold.co/800x450/1e293b/ffffff?text=No+Image",
+        thumbnail: document.getElementById("proj-thumb").value.trim() || "https://placehold.co/630x500/1e293b/ffffff?text=No+Image",
+        thumbRatio: document.getElementById("proj-ratio").value,
         meta: {
           "Peran": document.getElementById("meta-peran").value.trim(),
           "Ukuran Tim": document.getElementById("meta-tim").value.trim(),
@@ -1259,7 +1274,6 @@ Membuat tekstur stylized"></textarea>
       showToast("Perubahan diterapkan! Klik 'Simpan & Publish' di atas agar online.");
     });
 
-    // Tutup modal jika klik area gelap atau tekan ESC
     document.querySelectorAll(".modal-backdrop").forEach(el => {
       el.addEventListener("click", (e) => {
         if (e.target === el) closeBackdrop(el.id);
@@ -1271,7 +1285,6 @@ Membuat tekstur stylized"></textarea>
       }
     });
 
-    // Inisialisasi
     if (ADMIN_TOKEN) setAdminUI(true);
     loadData();
   </script>
