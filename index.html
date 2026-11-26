@@ -1037,9 +1037,10 @@ Membuat tekstur stylized"></textarea>
       try {
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`;
         let sha = undefined;
-        const getRes = await fetch(`${url}?ref=${GITHUB_CONFIG.branch}`, {
-          headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github+json" }
-        });
+        const getRes = await fetch(`${url}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`, {
+  cache: "no-store",
+  headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, Accept: "application/vnd.github+json" }
+});
         if (getRes.ok) {
           const existing = await getRes.json();
           sha = existing.sha;
