@@ -5,13 +5,12 @@
     "tentang": "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine.",
     "skills": [
       "Blender",
-      "Unity",
-      "Godot",
-      "Substance Designer",
+      "Aseprite",
       "3D Modeling",
-      "Texturing"
+      "Texturing",
+      "Simple animation 2D Pixel art"
     ],
-    "email": "emailkamu@gmail.com",
+    "email": "muhammadzidhan13@gmail.com",
     "sosmed": [
       {
         "label": "Itch.io",
@@ -20,10 +19,6 @@
       {
         "label": "GitHub",
         "url": "https://github.com/ToroTarou"
-      },
-      {
-        "label": "Gmail",
-        "url": "muhammadzidhan13@gmail.com"
       }
     ],
     "thumbRatio": "contain"
