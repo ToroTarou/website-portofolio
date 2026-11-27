@@ -25,6 +25,31 @@
   },
   "projects": [
     {
+      "title": "The(New)Rules",
+      "year": "2026",
+      "role": "3D Prop Artist",
+      "tagline": "Rules Are Made to Be Broken",
+      "thumbnail": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795786514238-rule.png",
+      "thumbRatio": "",
+      "meta": {
+        "Peran": "3D Artist",
+        "Ukuran Tim": "7 Orang",
+        "Engine / Tools": "Blender",
+        "Durasi": "2 Hari"
+      },
+      "links": [
+        {
+          "label": "Mainkan di Itch.io",
+          "url": "https://mada-hash.itch.io/thenewrules"
+        }
+      ],
+      "overview": "In this game, players are challenged to observe their surroundings, read the rules written on the walls, and discover creative ways to overcome each obstacle. Use your logic, think outside the box, and exploit the loopholes hidden within every rule to find a way out without triggering the punishment alarm.\n\nRemember, you don't have to break the rules to beat the game. Sometimes, all you need is a different way of thinking!",
+      "contributions": [
+        "Membuat Prop untuk Level 1 dan 3"
+      ],
+      "gallery": []
+    },
+    {
       "title": "KEBELET",
       "year": "2026",
       "role": "3D Environment & Prop Artist",
