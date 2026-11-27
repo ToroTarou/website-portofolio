@@ -25,6 +25,27 @@
   },
   "projects": [
     {
+      "title": "Animasi Tembakan",
+      "group": "Personal",
+      "category": "2D / 3D Art",
+      "year": "2026",
+      "role": "2D Animator Pixel Art",
+      "tagline": "",
+      "thumbnail": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795796782011-animasi_susah_bre-Recovered.gif",
+      "thumbRatio": "1 / 1",
+      "videoUrl": "",
+      "meta": {
+        "Peran": "",
+        "Ukuran Tim": "1",
+        "Engine / Tools": "Aseprite",
+        "Durasi": "1 Hari"
+      },
+      "links": [],
+      "overview": "",
+      "contributions": [],
+      "gallery": []
+    },
+    {
       "title": "Short Animation",
       "group": "Personal",
       "category": "Animasi",
@@ -35,10 +56,10 @@
       "thumbRatio": "16 / 9",
       "videoUrl": "",
       "meta": {
-        "Peran": "",
-        "Ukuran Tim": "",
-        "Engine / Tools": "",
-        "Durasi": ""
+        "Peran": "3D Animator",
+        "Ukuran Tim": "1",
+        "Engine / Tools": "Blender",
+        "Durasi": "Proyek UAS"
       },
       "links": [],
       "overview": "",
