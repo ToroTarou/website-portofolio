@@ -25,6 +25,27 @@
   },
   "projects": [
     {
+      "title": "Short Animation",
+      "group": "Personal",
+      "category": "Animasi",
+      "year": "2025",
+      "role": "3D Animator",
+      "tagline": "",
+      "thumbnail": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795796149840-0001-0017-ezgif.com-optimize.gif",
+      "thumbRatio": "contain",
+      "videoUrl": "",
+      "meta": {
+        "Peran": "",
+        "Ukuran Tim": "",
+        "Engine / Tools": "",
+        "Durasi": ""
+      },
+      "links": [],
+      "overview": "",
+      "contributions": [],
+      "gallery": []
+    },
+    {
       "title": "The(New)Rules",
       "year": "2026",
       "role": "3D Prop Artist",
