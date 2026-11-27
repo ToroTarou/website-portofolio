@@ -47,7 +47,13 @@
       "contributions": [
         "Membuat Prop untuk Level 1 dan 3"
       ],
-      "gallery": []
+      "gallery": [
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795789647252-ss_gameplay.png",
+          "caption": "Prop Level 3",
+          "detail": "[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795789972381-Level_3_prop.gif]\n\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795789963107-Level_3_Rule_Board.gif]\n-  Untuk rule board yang bisa dihancurkan saya menggunakan add-on blender yaitu cel fracture agar bisa auto mengenerate kepingan kepingan rule board."
+        }
+      ]
     },
     {
       "title": "KEBELET",
