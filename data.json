@@ -116,7 +116,13 @@
         "Membuat aset environment",
         "Mebuat asset puzzle/minigame"
       ],
-      "gallery": []
+      "gallery": [
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795793072022-dust_minigame.gif",
+          "caption": "",
+          "detail": "[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795793098300-dust_minigame.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795793079902-medic_minigame.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795793113030-pipa_minigame.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795793171951-blender_minigame.gif]"
+        }
+      ]
     },
     {
       "title": "Nicholas Flight",
