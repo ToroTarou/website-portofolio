@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portofolio Game</title>
+  <title>Portofolio</title>
   <style>
     :root {
       --bg: #fafafa;
@@ -121,7 +121,7 @@
       flex-wrap: wrap;
       gap: 20px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
     .brand h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; }
     .brand p { color: var(--muted); font-size: 1rem; margin-top: 4px; }
@@ -135,15 +135,50 @@
     }
     nav a:hover { color: var(--text); }
 
-    /* Grid Game */
+    /* Filter Bar Kategori */
+    .works-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
     .section-label {
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--muted);
-      margin-bottom: 20px;
       font-weight: 600;
     }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .filter-btn:hover {
+      border-color: #9ca3af;
+      color: var(--text);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Grid Karya */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -176,11 +211,26 @@
       gap: 6px;
     }
     body.is-admin .card-admin-tools { display: flex; }
+    .card-cat-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 4;
+      background: rgba(17, 24, 39, 0.78);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.02em;
+    }
     .card-thumb {
       width: 100%;
       aspect-ratio: 630 / 500;
       background: #e5e7eb;
       overflow: hidden;
+      position: relative;
     }
     .card-thumb img {
       width: 100%;
@@ -313,6 +363,18 @@
       object-fit: contain;
       display: block;
     }
+    .modal-video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .modal-video-wrap iframe,
+    .modal-video-wrap video {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
     .modal-content { padding: 32px; }
     .modal-header {
       display: flex;
@@ -379,7 +441,7 @@
       font-weight: 700;
     }
 
-    /* Galeri Breakdown (Bisa Diklik) */
+    /* Galeri Breakdown */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -421,10 +483,8 @@
       color: var(--blue);
     }
 
-    /* Tampilan Artikel Breakdown (Ala Gerlogu) */
-    .bd-modal-body {
-      padding: 28px 32px 36px;
-    }
+    /* Artikel Breakdown */
+    .bd-modal-body { padding: 28px 32px 36px; }
     .bd-main-media {
       width: 100%;
       border-radius: 12px;
@@ -441,32 +501,15 @@
       display: block;
       margin: 0 auto;
     }
-    .bd-content {
-      font-size: 0.96rem;
-      color: #1f2937;
-      line-height: 1.7;
-    }
-    .bd-bullet {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 8px;
-      align-items: flex-start;
-    }
-    .bd-bullet-dot {
-      color: #111827;
-      font-weight: 700;
-      line-height: 1.6;
-      flex-shrink: 0;
-    }
+    .bd-content { font-size: 0.96rem; color: #1f2937; line-height: 1.7; }
+    .bd-bullet { display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start; }
+    .bd-bullet-dot { color: #111827; font-weight: 700; line-height: 1.6; flex-shrink: 0; }
     .bd-bullet.level-0 { margin-left: 0; }
     .bd-bullet.level-1 { margin-left: 22px; }
     .bd-bullet.level-2 { margin-left: 44px; }
     .bd-para { margin-bottom: 10px; color: #374151; }
     .bd-spacer { height: 10px; }
-    .bd-inline-img {
-      margin: 18px auto 22px;
-      text-align: center;
-    }
+    .bd-inline-img { margin: 18px auto 22px; text-align: center; }
     .bd-inline-img img {
       max-width: 100%;
       max-height: 440px;
@@ -514,12 +557,7 @@
       background: #fff;
     }
     .field textarea { min-height: 90px; resize: vertical; }
-    .upload-box {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .upload-box { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .upload-box input[type="text"] { flex: 1; min-width: 180px; }
     .dynamic-row {
       display: flex;
@@ -543,12 +581,7 @@
       flex-direction: column;
       gap: 10px;
     }
-    .gallery-editor-top {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .gallery-editor-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .gallery-editor-top input { flex: 1; min-width: 160px; }
     .gal-detail-tools {
       display: flex;
@@ -600,7 +633,7 @@
           <option value="contain">Rasio: Utuh (Tidak Terpotong)</option>
         </select>
         <button class="btn btn-light" id="btn-edit-profile">Edit Profil</button>
-        <button class="btn btn-primary" id="btn-add-project">+ Tambah Game</button>
+        <button class="btn btn-primary" id="btn-add-project">+ Tambah Karya</button>
         <button class="btn btn-success" id="btn-publish">Simpan & Publish</button>
         <button class="btn btn-danger" id="btn-logout">Logout</button>
       </div>
@@ -618,7 +651,10 @@
     </header>
 
     <main>
-      <div class="section-label">Selected Games & Projects</div>
+      <div class="works-header">
+        <div class="section-label">Selected Works</div>
+        <div class="filter-tabs" id="filter-tabs"></div>
+      </div>
       <div class="grid" id="projects-grid"></div>
     </main>
 
@@ -642,11 +678,11 @@
     </footer>
   </div>
 
-  <!-- MODAL 1: DETAIL GAME -->
+  <!-- MODAL 1: DETAIL KARYA -->
   <div class="modal-backdrop" id="view-modal">
     <div class="modal" role="dialog" aria-modal="true">
       <button class="modal-close" onclick="closeBackdrop('view-modal')">×</button>
-      <img class="modal-hero" id="modal-hero" src="" alt="" />
+      <div id="modal-media-area"></div>
       <div class="modal-content">
         <div class="modal-header">
           <div>
@@ -656,11 +692,11 @@
           <div class="modal-links" id="modal-links"></div>
         </div>
         <div class="meta-grid" id="modal-meta"></div>
-        <div class="modal-section">
-          <h3>Tentang Game</h3>
+        <div class="modal-section" id="modal-overview-section">
+          <h3 id="modal-overview-title">Tentang Karya</h3>
           <p id="modal-overview"></p>
         </div>
-        <div class="modal-section">
+        <div class="modal-section" id="modal-contrib-section">
           <h3>Kontribusi Saya</h3>
           <ul class="contrib-list" id="modal-contributions"></ul>
         </div>
@@ -672,7 +708,7 @@
     </div>
   </div>
 
-  <!-- MODAL 1B: DETAIL PENJELASAN BREAKDOWN (Muncul saat GIF/Foto diklik) -->
+  <!-- MODAL 1B: DETAIL PENJELASAN BREAKDOWN -->
   <div class="modal-backdrop" id="breakdown-modal">
     <div class="modal" role="dialog" aria-modal="true">
       <div class="editor-head">
@@ -757,34 +793,44 @@
     </div>
   </div>
 
-  <!-- MODAL 4: TAMBAH / EDIT GAME -->
+  <!-- MODAL 4: TAMBAH / EDIT KARYA -->
   <div class="modal-backdrop" id="project-modal">
     <div class="modal">
       <div class="editor-head">
-        <h2 id="proj-modal-title">Edit Game</h2>
+        <h2 id="proj-modal-title">Edit Karya</h2>
         <button class="btn btn-outline btn-sm" onclick="closeBackdrop('project-modal')">Tutup</button>
       </div>
       <div class="editor-body">
         <input type="hidden" id="proj-index" value="-1" />
         <div class="form-row">
           <div class="field">
-            <label>Judul Game / Proyek</label>
-            <input type="text" id="proj-title" placeholder="Contoh: Nicholas Flight" />
+            <label>Judul Karya / Game</label>
+            <input type="text" id="proj-title" placeholder="Contoh: Short Movie UAS Animasi" />
+          </div>
+          <div class="field">
+            <label>Kategori Karya</label>
+            <select id="proj-category">
+              <option value="Game">Game</option>
+              <option value="Animasi">Animasi</option>
+              <option value="2D / 3D Art">2D / 3D Art</option>
+              <option value="Karya Lainnya">Karya Lainnya</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Peran Singkat (Muncul di Kartu Depan)</label>
+            <input type="text" id="proj-role" placeholder="3D Animator / Solo Project" />
           </div>
           <div class="field">
             <label>Tahun</label>
             <input type="text" id="proj-year" placeholder="2026" />
           </div>
         </div>
-        <div class="form-row">
-          <div class="field">
-            <label>Peran Singkat (Muncul di Kartu Depan)</label>
-            <input type="text" id="proj-role" placeholder="2D Artist & Animator" />
-          </div>
-          <div class="field">
-            <label>Tagline Singkat</label>
-            <input type="text" id="proj-tagline" placeholder="1 kalimat singkat tentang game ini" />
-          </div>
+
+        <div class="field">
+          <label>Tagline Singkat</label>
+          <input type="text" id="proj-tagline" placeholder="1 kalimat singkat tentang karya ini" />
         </div>
 
         <div class="form-row">
@@ -803,7 +849,7 @@
             <select id="proj-ratio">
               <option value="">Ikuti Pengaturan Bar Admin (Default)</option>
               <option value="630 / 500">Itch.io (630×500)</option>
-              <option value="16 / 9">Widescreen (16:9)</option>
+              <option value="16 / 9">Widescreen (16:9) — Cocok untuk Animasi</option>
               <option value="4 / 3">Klasik (4:3)</option>
               <option value="1 / 1">Kotak (1:1)</option>
               <option value="contain">Utuh / Tidak Terpotong</option>
@@ -811,42 +857,48 @@
           </div>
         </div>
 
+        <div class="field">
+          <label>Link Video Karya (Opsional — Khusus Animasi / Trailer)</label>
+          <input type="text" id="proj-video" placeholder="Tempel link YouTube atau Google Drive (boleh dikosongkan)" />
+          <small>Jika diisi, video bisa langsung diputar di halaman detail saat karya diklik. Untuk Google Drive, pastikan akses file disetel ke "Anyone with the link".</small>
+        </div>
+
         <div class="form-row">
           <div class="field">
             <label>Info: Peran</label>
-            <input type="text" id="meta-peran" placeholder="2D Artist" />
+            <input type="text" id="meta-peran" placeholder="3D Animator" />
           </div>
           <div class="field">
             <label>Info: Ukuran Tim</label>
-            <input type="text" id="meta-tim" placeholder="4 Orang" />
+            <input type="text" id="meta-tim" placeholder="1 Orang (Solo) / 4 Orang" />
           </div>
         </div>
         <div class="form-row">
           <div class="field">
-            <label>Info: Engine / Tools</label>
-            <input type="text" id="meta-tools" placeholder="Aseprite, Unity" />
+            <label>Info: Software / Tools</label>
+            <input type="text" id="meta-tools" placeholder="Blender, Premiere Pro, Aseprite" />
           </div>
           <div class="field">
-            <label>Info: Durasi / Status</label>
-            <input type="text" id="meta-durasi" placeholder="1 Minggu" />
+            <label>Info: Durasi / Konteks</label>
+            <input type="text" id="meta-durasi" placeholder="Proyek UAS / 2 Minggu" />
           </div>
         </div>
 
         <div class="field">
-          <label>Tentang Game</label>
-          <textarea id="proj-overview" placeholder="Jelaskan singkat game ini tentang apa..."></textarea>
+          <label>Tentang Karya</label>
+          <textarea id="proj-overview" placeholder="Jelaskan singkat karya/animasi ini tentang apa..."></textarea>
         </div>
 
         <div class="field">
-          <label>Kontribusi Saya (1 baris = 1 poin)</label>
-          <textarea id="proj-contributions" style="min-height:110px;" placeholder="Membuat animasi player
-Membuat environment
-Membuat aset UI"></textarea>
-          <small>Tekan Enter untuk membuat poin kontribusi baru.</small>
+          <label>Kontribusi / Proses Pengerjaan (1 baris = 1 poin)</label>
+          <textarea id="proj-contributions" style="min-height:110px;" placeholder="Membuat storyboard dan animatic
+Modeling & rigging karakter di Blender
+Rendering dan compositing akhir"></textarea>
+          <small>Tekan Enter untuk membuat poin baru.</small>
         </div>
 
         <div class="field">
-          <label>Tombol Link (Itch.io / Trailer / GitHub)</label>
+          <label>Tombol Link (Itch.io / YouTube / ArtStation / GitHub)</label>
           <div id="proj-links-list"></div>
           <button type="button" class="btn btn-outline btn-sm" style="align-self:flex-start;" id="btn-add-link">+ Tambah Tombol Link</button>
         </div>
@@ -878,8 +930,8 @@ Membuat aset UI"></textarea>
       profile: {
         nama: "ToroTarou",
         peran: "2D & 3D Game Artist",
-        tentang: "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, environment, dan integrasi visual di dalam game engine.",
-        skills: ["Blender", "Unity", "Godot", "Substance Designer", "3D Modeling", "Texturing"],
+        tentang: "Mahasiswa Teknologi Game yang berfokus pada pembuatan aset 2D/3D, animasi, environment, dan integrasi visual di dalam game engine.",
+        skills: ["Blender", "Unity", "Godot", "Aseprite", "3D Modeling", "Animasi"],
         email: "emailkamu@gmail.com",
         thumbRatio: "630 / 500",
         sosmed: [
@@ -894,6 +946,7 @@ Membuat aset UI"></textarea>
     let SITE_DATA = structuredClone(DEFAULT_DATA);
     let ADMIN_TOKEN = localStorage.getItem("gh_portfolio_token") || "";
     let HAS_UNSAVED = false;
+    let ACTIVE_FILTER = "Semua";
 
     function showToast(msg, duration = 3500) {
       const t = document.getElementById("toast");
@@ -912,6 +965,10 @@ Membuat aset UI"></textarea>
 
     function closeBackdrop(id) {
       document.getElementById(id).classList.remove("open");
+      if (id === "view-modal") {
+        // Hentikan video agar tidak tetap bersuara saat modal ditutup
+        document.getElementById("modal-media-area").innerHTML = "";
+      }
       if (!document.querySelector(".modal-backdrop.open")) {
         document.body.style.overflow = "";
       }
@@ -922,14 +979,14 @@ Membuat aset UI"></textarea>
       document.getElementById("unsaved-badge").classList.toggle("show", flag);
     }
 
-   function escapeHtml(str) {
-  const am = "&";
-  return String(str || "")
-    .replace(/&/g, am + "amp;")
-    .replace(/</g, am + "lt;")
-    .replace(/>/g, am + "gt;")
-    .replace(/"/g, am + "quot;");
-}
+    function escapeHtml(str) {
+      const am = "&";
+      return String(str || "")
+        .replace(/&/g, am + "amp;")
+        .replace(/</g, am + "lt;")
+        .replace(/>/g, am + "gt;")
+        .replace(/"/g, am + "quot;");
+    }
 
     function utf8ToBase64(str) {
       const bytes = new TextEncoder().encode(str);
@@ -938,11 +995,9 @@ Membuat aset UI"></textarea>
       return btoa(binary);
     }
 
-    // Parser teks breakdown bergaya artikel (poin bertingkat, bold, panah, gambar sisipan)
     function formatInlineText(raw) {
-      return escapeHtml(raw)
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        .replace(/->/g, "→");
+      const withArrow = String(raw || "").replace(/->/g, "→");
+      return escapeHtml(withArrow).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
     }
 
     function renderBreakdownMarkup(text) {
@@ -969,6 +1024,23 @@ Membuat aset UI"></textarea>
 
         return `<p class="bd-para">${formatInlineText(trimmed)}</p>`;
       }).join("");
+    }
+
+    function buildVideoEmbed(url) {
+      if (!url) return "";
+      const u = url.trim();
+      const ytMatch = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      if (ytMatch) {
+        return `<div class="modal-video-wrap"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+      }
+      const gdMatch = u.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (gdMatch) {
+        return `<div class="modal-video-wrap"><iframe src="https://drive.google.com/file/d/${gdMatch[1]}/preview" allow="autoplay" allowfullscreen></iframe></div>`;
+      }
+      if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(u)) {
+        return `<div class="modal-video-wrap"><video src="${escapeHtml(u)}" controls playsinline></video></div>`;
+      }
+      return "";
     }
 
     async function loadData() {
@@ -998,6 +1070,31 @@ Membuat aset UI"></textarea>
       renderSite();
     }
 
+    function renderFilterTabs() {
+      const cats = ["Semua"];
+      SITE_DATA.projects.forEach(p => {
+        const c = p.category || "Game";
+        if (!cats.includes(c)) cats.push(c);
+      });
+      if (!cats.includes(ACTIVE_FILTER)) ACTIVE_FILTER = "Semua";
+
+      const wrap = document.getElementById("filter-tabs");
+      if (cats.length <= 2) {
+        wrap.innerHTML = "";
+        return;
+      }
+      wrap.innerHTML = cats.map(c =>
+        `<button class="filter-btn ${c === ACTIVE_FILTER ? "active" : ""}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+      ).join("");
+
+      wrap.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          ACTIVE_FILTER = btn.dataset.cat;
+          renderSite();
+        });
+      });
+    }
+
     function renderSite() {
       const p = SITE_DATA.profile;
       const globalRatio = p.thumbRatio || "630 / 500";
@@ -1023,9 +1120,14 @@ Membuat aset UI"></textarea>
       document.getElementById("skills-list").innerHTML = (p.skills || [])
         .map(sk => `<span class="tag">${escapeHtml(sk)}</span>`).join("");
 
+      renderFilterTabs();
+
       const grid = document.getElementById("projects-grid");
       grid.innerHTML = "";
       SITE_DATA.projects.forEach((proj, idx) => {
+        const cat = proj.category || "Game";
+        if (ACTIVE_FILTER !== "Semua" && cat !== ACTIVE_FILTER) return;
+
         const activeRatio = proj.thumbRatio || globalRatio;
         const isContain = activeRatio === "contain";
         const boxStyle = isContain
@@ -1036,6 +1138,7 @@ Membuat aset UI"></textarea>
         const card = document.createElement("article");
         card.className = "card";
         card.innerHTML = `
+          <span class="card-cat-badge">${escapeHtml(cat)}</span>
           <div class="card-admin-tools">
             <button class="btn btn-primary btn-sm" data-edit="${idx}">Edit</button>
             <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
@@ -1049,7 +1152,7 @@ Membuat aset UI"></textarea>
               <span class="card-year">${escapeHtml(proj.year || "")}</span>
             </div>
             <div class="card-role">${escapeHtml(proj.role || "")}</div>
-            <div class="card-hint">Lihat kontribusi →</div>
+            <div class="card-hint">${cat === "Animasi" ? "Tonton & lihat proses →" : "Lihat kontribusi →"}</div>
           </div>
         `;
         card.addEventListener("click", (e) => {
@@ -1058,11 +1161,11 @@ Membuat aset UI"></textarea>
             openProjectEditor(idx);
           } else if (e.target.closest("[data-del]")) {
             e.stopPropagation();
-            if (confirm(`Hapus proyek "${proj.title}"?`)) {
+            if (confirm(`Hapus karya "${proj.title}"?`)) {
               SITE_DATA.projects.splice(idx, 1);
               markUnsaved(true);
               renderSite();
-              showToast("Proyek dihapus. Klik 'Simpan & Publish' untuk menyimpan permanen.");
+              showToast("Karya dihapus. Klik 'Simpan & Publish' untuk menyimpan permanen.");
             }
           } else {
             openViewModal(idx);
@@ -1074,25 +1177,54 @@ Membuat aset UI"></textarea>
 
     function openViewModal(idx) {
       const p = SITE_DATA.projects[idx];
-      const hero = document.getElementById("modal-hero");
-      hero.src = p.thumbnail;
-      hero.alt = p.title;
+      const cat = p.category || "Game";
+
+      const mediaArea = document.getElementById("modal-media-area");
+      const videoHtml = buildVideoEmbed(p.videoUrl);
+      if (videoHtml) {
+        mediaArea.innerHTML = videoHtml;
+      } else {
+        mediaArea.innerHTML = `<img class="modal-hero" src="${escapeHtml(p.thumbnail)}" alt="${escapeHtml(p.title)}" />`;
+      }
+
       document.getElementById("modal-title").textContent = p.title;
       document.getElementById("modal-tagline").textContent = p.tagline || "";
-      document.getElementById("modal-overview").textContent = p.overview || "";
+
+      const overviewTitle = cat === "Game" ? "Tentang Game" : (cat === "Animasi" ? "Tentang Animasi" : "Tentang Karya");
+      document.getElementById("modal-overview-title").textContent = overviewTitle;
+      const ovSec = document.getElementById("modal-overview-section");
+      if (p.overview && p.overview.trim()) {
+        ovSec.style.display = "block";
+        document.getElementById("modal-overview").textContent = p.overview;
+      } else {
+        ovSec.style.display = "none";
+      }
 
       document.getElementById("modal-links").innerHTML = (p.links || [])
         .filter(l => l.label && l.url)
         .map((l, i) => `<a class="btn-link ${i === 0 ? "" : "secondary"}" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)}</a>`)
         .join("");
 
-      document.getElementById("modal-meta").innerHTML = Object.entries(p.meta || {})
-        .filter(([k, v]) => v)
-        .map(([k, v]) => `<div class="meta-item"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong></div>`)
-        .join("");
+      const metaEntries = Object.entries(p.meta || {}).filter(([k, v]) => v);
+      const metaEl = document.getElementById("modal-meta");
+      if (metaEntries.length > 0) {
+        metaEl.style.display = "grid";
+        metaEl.innerHTML = metaEntries
+          .map(([k, v]) => `<div class="meta-item"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong></div>`)
+          .join("");
+      } else {
+        metaEl.style.display = "none";
+      }
 
-      document.getElementById("modal-contributions").innerHTML = (p.contributions || [])
-        .map(c => `<li>${escapeHtml(c)}</li>`).join("");
+      const contribSec = document.getElementById("modal-contrib-section");
+      const validContribs = (p.contributions || []).filter(Boolean);
+      if (validContribs.length > 0) {
+        contribSec.style.display = "block";
+        document.getElementById("modal-contributions").innerHTML = validContribs
+          .map(c => `<li>${escapeHtml(c)}</li>`).join("");
+      } else {
+        contribSec.style.display = "none";
+      }
 
       const galSec = document.getElementById("modal-gallery-section");
       const galEl = document.getElementById("modal-gallery");
@@ -1326,12 +1458,12 @@ Membuat aset UI"></textarea>
       showToast("Profil diperbarui! Jangan lupa klik 'Simpan & Publish'.");
     });
 
-    // EDITOR PROYEK / GAME
+    // EDITOR KARYA / GAME / ANIMASI
     function addLinkRow(label = "", url = "") {
       const div = document.createElement("div");
       div.className = "dynamic-row";
       div.innerHTML = `
-        <input type="text" class="lnk-label" placeholder="Teks Tombol (misal: Mainkan)" value="${escapeHtml(label)}" />
+        <input type="text" class="lnk-label" placeholder="Teks Tombol (misal: Tonton di YouTube)" value="${escapeHtml(label)}" />
         <input type="text" class="lnk-url" placeholder="https://..." value="${escapeHtml(url)}" />
         <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">Hapus</button>
       `;
@@ -1350,7 +1482,7 @@ Membuat aset UI"></textarea>
           </label>
           <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.gallery-editor-card').remove()">Hapus</button>
         </div>
-        <input type="text" class="gal-cap" placeholder="Judul Breakdown (misal: Pembuatan Animasi Player)" value="${escapeHtml(caption)}" />
+        <input type="text" class="gal-cap" placeholder="Judul Breakdown (misal: Proses Rigging & Animasi)" value="${escapeHtml(caption)}" />
         <div class="gal-detail-tools">
           <small style="color:var(--muted);">Penjelasan cara pembuatan (muncul saat GIF/foto diklik):</small>
           <label class="btn btn-outline btn-sm" style="cursor:pointer;">
@@ -1358,15 +1490,13 @@ Membuat aset UI"></textarea>
             <input type="file" accept="image/*" class="gal-file-inline" style="display:none;" />
           </label>
         </div>
-        <textarea class="gal-detail" style="min-height:110px;" placeholder="- **Tahap 1** -> Membuat sketsa & sprite di Aseprite
-  - Menentukan ukuran kanvas 32x32 px
-  - Membuat frame idle, jalan, dan ambil barang
-- **Tahap 2** -> Export sprite sheet ke Unity"></textarea>
+        <textarea class="gal-detail" style="min-height:110px;" placeholder="- **Tahap 1** -> Membuat storyboard & animatic
+  - Menentukan timing tiap scene
+- **Tahap 2** -> Rendering di Blender"></textarea>
         <small style="color:var(--muted);">Tips format: pakai <code>- </code> untuk poin, <code>  - </code> (2 spasi) untuk sub-poin, <code>**teks**</code> untuk <strong>tebal</strong>, dan <code>-></code> untuk panah (→).</small>
       `;
       div.querySelector(".gal-detail").value = detail || "";
 
-      // Upload gambar utama breakdown
       const mainFileInput = div.querySelector(".gal-file-main");
       const urlInput = div.querySelector(".gal-img");
       mainFileInput.addEventListener("change", async (e) => {
@@ -1381,7 +1511,6 @@ Membuat aset UI"></textarea>
         }
       });
 
-      // Upload & sisipkan gambar/GIF di tengah penjelasan
       const inlineFileInput = div.querySelector(".gal-file-inline");
       const detailArea = div.querySelector(".gal-detail");
       inlineFileInput.addEventListener("change", async (e) => {
@@ -1421,18 +1550,20 @@ Membuat aset UI"></textarea>
 
     function openProjectEditor(idx = -1) {
       document.getElementById("proj-index").value = idx;
-      document.getElementById("proj-modal-title").textContent = idx === -1 ? "Tambah Game Baru" : "Edit Game";
+      document.getElementById("proj-modal-title").textContent = idx === -1 ? "Tambah Karya Baru" : "Edit Karya";
       const p = idx === -1 ? {
-        title: "", year: new Date().getFullYear().toString(), role: "", tagline: "",
-        thumbnail: "", thumbRatio: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
+        title: "", category: "Game", year: new Date().getFullYear().toString(), role: "", tagline: "",
+        thumbnail: "", thumbRatio: "", videoUrl: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
       } : SITE_DATA.projects[idx];
 
       document.getElementById("proj-title").value = p.title || "";
+      document.getElementById("proj-category").value = p.category || "Game";
       document.getElementById("proj-year").value = p.year || "";
       document.getElementById("proj-role").value = p.role || "";
       document.getElementById("proj-tagline").value = p.tagline || "";
       document.getElementById("proj-thumb").value = p.thumbnail || "";
       document.getElementById("proj-ratio").value = p.thumbRatio || "";
+      document.getElementById("proj-video").value = p.videoUrl || "";
       document.getElementById("meta-peran").value = p.meta?.["Peran"] || "";
       document.getElementById("meta-tim").value = p.meta?.["Ukuran Tim"] || "";
       document.getElementById("meta-tools").value = p.meta?.["Engine / Tools"] || "";
@@ -1454,7 +1585,7 @@ Membuat aset UI"></textarea>
     document.getElementById("btn-save-project").addEventListener("click", () => {
       const idx = parseInt(document.getElementById("proj-index").value, 10);
       const title = document.getElementById("proj-title").value.trim();
-      if (!title) { alert("Judul game wajib diisi."); return; }
+      if (!title) { alert("Judul karya wajib diisi."); return; }
 
       const links = [...document.querySelectorAll("#proj-links-list .dynamic-row")].map(r => ({
         label: r.querySelector(".lnk-label").value.trim(),
@@ -1469,11 +1600,13 @@ Membuat aset UI"></textarea>
 
       const newObj = {
         title,
+        category: document.getElementById("proj-category").value || "Game",
         year: document.getElementById("proj-year").value.trim(),
         role: document.getElementById("proj-role").value.trim(),
         tagline: document.getElementById("proj-tagline").value.trim(),
         thumbnail: document.getElementById("proj-thumb").value.trim() || "https://placehold.co/630x500/1e293b/ffffff?text=No+Image",
         thumbRatio: document.getElementById("proj-ratio").value,
+        videoUrl: document.getElementById("proj-video").value.trim(),
         meta: {
           "Peran": document.getElementById("meta-peran").value.trim(),
           "Ukuran Tim": document.getElementById("meta-tim").value.trim(),
