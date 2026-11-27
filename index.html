@@ -121,7 +121,7 @@
       flex-wrap: wrap;
       gap: 20px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 40px;
+      margin-bottom: 44px;
     }
     .brand h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; }
     .brand p { color: var(--muted); font-size: 1rem; margin-top: 4px; }
@@ -135,28 +135,15 @@
     }
     nav a:hover { color: var(--text); }
 
-    /* Filter Bar Kategori */
-    .works-header {
+    /* Section & Sub-section Pajangan */
+    .quick-jump {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 36px;
     }
-    .section-label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
+    .jump-pill {
+      text-decoration: none;
       background: var(--surface);
       color: var(--muted);
       border: 1px solid var(--border);
@@ -164,18 +151,63 @@
       border-radius: 999px;
       font-size: 0.84rem;
       font-weight: 600;
-      cursor: pointer;
       transition: all 0.2s ease;
-      font-family: inherit;
     }
-    .filter-btn:hover {
+    .jump-pill:hover {
+      color: var(--text);
       border-color: #9ca3af;
+    }
+    .work-section {
+      margin-bottom: 64px;
+    }
+    .work-section + .work-section {
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .work-section-head {
+      margin-bottom: 24px;
+    }
+    .work-section-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--text);
     }
-    .filter-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+    .work-section-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .work-subsection {
+      margin-bottom: 40px;
+    }
+    .work-subsection:last-child {
+      margin-bottom: 0;
+    }
+    .work-subsection-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .work-subsection-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .empty-hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 24px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      text-align: center;
     }
 
     /* Grid Karya */
@@ -183,7 +215,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 28px;
-      margin-bottom: 72px;
       align-items: start;
     }
     .card {
@@ -211,20 +242,6 @@
       gap: 6px;
     }
     body.is-admin .card-admin-tools { display: flex; }
-    .card-cat-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 4;
-      background: rgba(17, 24, 39, 0.78);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 999px;
-      backdrop-filter: blur(4px);
-      letter-spacing: 0.02em;
-    }
     .card-thumb {
       width: 100%;
       aspect-ratio: 630 / 500;
@@ -651,11 +668,8 @@
     </header>
 
     <main>
-      <div class="works-header">
-        <div class="section-label">Selected Works</div>
-        <div class="filter-tabs" id="filter-tabs"></div>
-      </div>
-      <div class="grid" id="projects-grid"></div>
+      <div class="quick-jump" id="quick-jump"></div>
+      <div id="works-container"></div>
     </main>
 
     <section class="about-section" id="about">
@@ -802,13 +816,17 @@
       </div>
       <div class="editor-body">
         <input type="hidden" id="proj-index" value="-1" />
+
         <div class="form-row">
           <div class="field">
-            <label>Judul Karya / Game</label>
-            <input type="text" id="proj-title" placeholder="Contoh: Short Movie UAS Animasi" />
+            <label>Section Pajangan</label>
+            <select id="proj-group">
+              <option value="Game Jam">Game Jam</option>
+              <option value="Personal">Personal (Proyek Sendiri / Kuliah)</option>
+            </select>
           </div>
           <div class="field">
-            <label>Kategori Karya</label>
+            <label>Jenis Karya</label>
             <select id="proj-category">
               <option value="Game">Game</option>
               <option value="Animasi">Animasi</option>
@@ -817,10 +835,11 @@
             </select>
           </div>
         </div>
+
         <div class="form-row">
           <div class="field">
-            <label>Peran Singkat (Muncul di Kartu Depan)</label>
-            <input type="text" id="proj-role" placeholder="3D Animator / Solo Project" />
+            <label>Judul Karya / Game</label>
+            <input type="text" id="proj-title" placeholder="Contoh: Short Movie UAS Animasi" />
           </div>
           <div class="field">
             <label>Tahun</label>
@@ -828,9 +847,15 @@
           </div>
         </div>
 
-        <div class="field">
-          <label>Tagline Singkat</label>
-          <input type="text" id="proj-tagline" placeholder="1 kalimat singkat tentang karya ini" />
+        <div class="form-row">
+          <div class="field">
+            <label>Peran Singkat (Muncul di Kartu Depan)</label>
+            <input type="text" id="proj-role" placeholder="3D Animator / Solo Project" />
+          </div>
+          <div class="field">
+            <label>Tagline Singkat</label>
+            <input type="text" id="proj-tagline" placeholder="1 kalimat singkat tentang karya ini" />
+          </div>
         </div>
 
         <div class="form-row">
@@ -860,7 +885,7 @@
         <div class="field">
           <label>Link Video Karya (Opsional — Khusus Animasi / Trailer)</label>
           <input type="text" id="proj-video" placeholder="Tempel link YouTube atau Google Drive (boleh dikosongkan)" />
-          <small>Jika diisi, video bisa langsung diputar di halaman detail saat karya diklik. Untuk Google Drive, pastikan akses file disetel ke "Anyone with the link".</small>
+          <small>Jika diisi, video bisa langsung diputar saat kartu diklik. Untuk Google Drive, pastikan akses disetel ke "Anyone with the link".</small>
         </div>
 
         <div class="form-row">
@@ -880,7 +905,7 @@
           </div>
           <div class="field">
             <label>Info: Durasi / Konteks</label>
-            <input type="text" id="meta-durasi" placeholder="Proyek UAS / 2 Minggu" />
+            <input type="text" id="meta-durasi" placeholder="Proyek UAS / 1 Minggu" />
           </div>
         </div>
 
@@ -946,7 +971,6 @@ Rendering dan compositing akhir"></textarea>
     let SITE_DATA = structuredClone(DEFAULT_DATA);
     let ADMIN_TOKEN = localStorage.getItem("gh_portfolio_token") || "";
     let HAS_UNSAVED = false;
-    let ACTIVE_FILTER = "Semua";
 
     function showToast(msg, duration = 3500) {
       const t = document.getElementById("toast");
@@ -966,7 +990,6 @@ Rendering dan compositing akhir"></textarea>
     function closeBackdrop(id) {
       document.getElementById(id).classList.remove("open");
       if (id === "view-modal") {
-        // Hentikan video agar tidak tetap bersuara saat modal ditutup
         document.getElementById("modal-media-area").innerHTML = "";
       }
       if (!document.querySelector(".modal-backdrop.open")) {
@@ -1070,29 +1093,51 @@ Rendering dan compositing akhir"></textarea>
       renderSite();
     }
 
-    function renderFilterTabs() {
-      const cats = ["Semua"];
-      SITE_DATA.projects.forEach(p => {
-        const c = p.category || "Game";
-        if (!cats.includes(c)) cats.push(c);
-      });
-      if (!cats.includes(ACTIVE_FILTER)) ACTIVE_FILTER = "Semua";
+    function createProjectCard(proj, idx, globalRatio) {
+      const cat = proj.category || "Game";
+      const activeRatio = proj.thumbRatio || globalRatio;
+      const isContain = activeRatio === "contain";
+      const boxStyle = isContain
+        ? "aspect-ratio: 630 / 500; background: #111827;"
+        : `aspect-ratio: ${activeRatio};`;
+      const imgStyle = isContain ? "object-fit: contain;" : "object-fit: cover;";
 
-      const wrap = document.getElementById("filter-tabs");
-      if (cats.length <= 2) {
-        wrap.innerHTML = "";
-        return;
-      }
-      wrap.innerHTML = cats.map(c =>
-        `<button class="filter-btn ${c === ACTIVE_FILTER ? "active" : ""}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
-      ).join("");
-
-      wrap.querySelectorAll(".filter-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          ACTIVE_FILTER = btn.dataset.cat;
-          renderSite();
-        });
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-admin-tools">
+          <button class="btn btn-primary btn-sm" data-edit="${idx}">Edit</button>
+          <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
+        </div>
+        <div class="card-thumb" style="${boxStyle}">
+          <img src="${escapeHtml(proj.thumbnail)}" alt="${escapeHtml(proj.title)}" style="${imgStyle}" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-top">
+            <h3 class="card-title">${escapeHtml(proj.title)}</h3>
+            <span class="card-year">${escapeHtml(proj.year || "")}</span>
+          </div>
+          <div class="card-role">${escapeHtml(proj.role || "")}</div>
+          <div class="card-hint">${cat === "Animasi" ? "Tonton & lihat proses →" : "Lihat kontribusi →"}</div>
+        </div>
+      `;
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("[data-edit]")) {
+          e.stopPropagation();
+          openProjectEditor(idx);
+        } else if (e.target.closest("[data-del]")) {
+          e.stopPropagation();
+          if (confirm(`Hapus karya "${proj.title}"?`)) {
+            SITE_DATA.projects.splice(idx, 1);
+            markUnsaved(true);
+            renderSite();
+            showToast("Karya dihapus. Klik 'Simpan & Publish' untuk menyimpan permanen.");
+          }
+        } else {
+          openViewModal(idx);
+        }
       });
+      return card;
     }
 
     function renderSite() {
@@ -1120,59 +1165,95 @@ Rendering dan compositing akhir"></textarea>
       document.getElementById("skills-list").innerHTML = (p.skills || [])
         .map(sk => `<span class="tag">${escapeHtml(sk)}</span>`).join("");
 
-      renderFilterTabs();
+      // Kelompokkan karya ke Section: Game Jam & Personal (sub-bagian: Game, Animasi, 2D/3D Art, Lainnya)
+      const indexed = SITE_DATA.projects.map((proj, idx) => ({ proj, idx }));
+      const gameJamItems = indexed.filter(x => (x.proj.group || "Game Jam") === "Game Jam");
+      const personalItems = indexed.filter(x => x.proj.group === "Personal");
 
-      const grid = document.getElementById("projects-grid");
-      grid.innerHTML = "";
-      SITE_DATA.projects.forEach((proj, idx) => {
-        const cat = proj.category || "Game";
-        if (ACTIVE_FILTER !== "Semua" && cat !== ACTIVE_FILTER) return;
+      const personalSubDefs = [
+        { key: "Game", id: "sec-personal-game", label: "Games" },
+        { key: "Animasi", id: "sec-personal-animasi", label: "Animasi" },
+        { key: "2D / 3D Art", id: "sec-personal-art", label: "2D / 3D Art" },
+        { key: "Karya Lainnya", id: "sec-personal-lainnya", label: "Karya Lainnya" }
+      ];
 
-        const activeRatio = proj.thumbRatio || globalRatio;
-        const isContain = activeRatio === "contain";
-        const boxStyle = isContain
-          ? "aspect-ratio: 630 / 500; background: #111827;"
-          : `aspect-ratio: ${activeRatio};`;
-        const imgStyle = isContain ? "object-fit: contain;" : "object-fit: cover;";
+      const jumpLinks = [];
+      const container = document.getElementById("works-container");
+      container.innerHTML = "";
 
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <span class="card-cat-badge">${escapeHtml(cat)}</span>
-          <div class="card-admin-tools">
-            <button class="btn btn-primary btn-sm" data-edit="${idx}">Edit</button>
-            <button class="btn btn-danger btn-sm" data-del="${idx}">Hapus</button>
-          </div>
-          <div class="card-thumb" style="${boxStyle}">
-            <img src="${escapeHtml(proj.thumbnail)}" alt="${escapeHtml(proj.title)}" style="${imgStyle}" loading="lazy" />
-          </div>
-          <div class="card-body">
-            <div class="card-top">
-              <h3 class="card-title">${escapeHtml(proj.title)}</h3>
-              <span class="card-year">${escapeHtml(proj.year || "")}</span>
-            </div>
-            <div class="card-role">${escapeHtml(proj.role || "")}</div>
-            <div class="card-hint">${cat === "Animasi" ? "Tonton & lihat proses →" : "Lihat kontribusi →"}</div>
+      // SECTION 1: GAME JAM
+      if (gameJamItems.length > 0 || ADMIN_TOKEN) {
+        if (gameJamItems.length > 0) {
+          jumpLinks.push({ href: "#sec-gamejam", label: "Game Jam" });
+        }
+        const sec = document.createElement("section");
+        sec.className = "work-section";
+        sec.id = "sec-gamejam";
+        sec.innerHTML = `
+          <div class="work-section-head">
+            <h2 class="work-section-title">Game Jam</h2>
+            <p class="work-section-desc">Karya game kolaborasi dalam waktu terbatas.</p>
           </div>
         `;
-        card.addEventListener("click", (e) => {
-          if (e.target.closest("[data-edit]")) {
-            e.stopPropagation();
-            openProjectEditor(idx);
-          } else if (e.target.closest("[data-del]")) {
-            e.stopPropagation();
-            if (confirm(`Hapus karya "${proj.title}"?`)) {
-              SITE_DATA.projects.splice(idx, 1);
-              markUnsaved(true);
-              renderSite();
-              showToast("Karya dihapus. Klik 'Simpan & Publish' untuk menyimpan permanen.");
-            }
-          } else {
-            openViewModal(idx);
-          }
+        if (gameJamItems.length > 0) {
+          const grid = document.createElement("div");
+          grid.className = "grid";
+          gameJamItems.forEach(({ proj, idx }) => grid.appendChild(createProjectCard(proj, idx, globalRatio)));
+          sec.appendChild(grid);
+        } else {
+          sec.innerHTML += `<div class="empty-hint">Belum ada karya di section Game Jam.</div>`;
+        }
+        container.appendChild(sec);
+      }
+
+      // SECTION 2: PERSONAL PROJECTS (Dipisah per Jenis: Games, Animasi, dst.)
+      if (personalItems.length > 0 || ADMIN_TOKEN) {
+        const sec = document.createElement("section");
+        sec.className = "work-section";
+        sec.id = "sec-personal";
+        sec.innerHTML = `
+          <div class="work-section-head">
+            <h2 class="work-section-title">Personal Projects</h2>
+            <p class="work-section-desc">Proyek pribadi dan karya kuliah di luar Game Jam.</p>
+          </div>
+        `;
+
+        let renderedSub = 0;
+        personalSubDefs.forEach(sub => {
+          const items = personalItems.filter(x => (x.proj.category || "Game") === sub.key);
+          if (items.length === 0) return;
+
+          renderedSub++;
+          jumpLinks.push({ href: `#${sub.id}`, label: `Personal: ${sub.label}` });
+
+          const subEl = document.createElement("div");
+          subEl.className = "work-subsection";
+          subEl.id = sub.id;
+          subEl.innerHTML = `<div class="work-subsection-title">${sub.label}</div>`;
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+          items.forEach(({ proj, idx }) => grid.appendChild(createProjectCard(proj, idx, globalRatio)));
+          subEl.appendChild(grid);
+          sec.appendChild(subEl);
         });
-        grid.appendChild(card);
-      });
+
+        if (renderedSub === 0 && ADMIN_TOKEN) {
+          sec.innerHTML += `<div class="empty-hint">Belum ada Personal Project. Klik <strong>+ Tambah Karya</strong> lalu pilih Section <strong>Personal</strong> (Jenis: Game atau Animasi).</div>`;
+        }
+        container.appendChild(sec);
+      }
+
+      const jumpEl = document.getElementById("quick-jump");
+      if (jumpLinks.length > 1) {
+        jumpEl.style.display = "flex";
+        jumpEl.innerHTML = jumpLinks
+          .map(l => `<a class="jump-pill" href="${l.href}">${escapeHtml(l.label)}</a>`)
+          .join("");
+      } else {
+        jumpEl.style.display = "none";
+        jumpEl.innerHTML = "";
+      }
     }
 
     function openViewModal(idx) {
@@ -1262,7 +1343,6 @@ Rendering dan compositing akhir"></textarea>
       openBackdrop("breakdown-modal");
     }
 
-    // Ganti Rasio Global dari Bar Admin
     document.getElementById("admin-ratio-select").addEventListener("change", (e) => {
       SITE_DATA.profile.thumbRatio = e.target.value;
       markUnsaved(true);
@@ -1326,6 +1406,7 @@ Rendering dan compositing akhir"></textarea>
       localStorage.removeItem("gh_portfolio_token");
       markUnsaved(false);
       setAdminUI(false);
+      renderSite();
       showToast("Berhasil logout.");
     });
 
@@ -1458,7 +1539,7 @@ Rendering dan compositing akhir"></textarea>
       showToast("Profil diperbarui! Jangan lupa klik 'Simpan & Publish'.");
     });
 
-    // EDITOR KARYA / GAME / ANIMASI
+    // EDITOR KARYA
     function addLinkRow(label = "", url = "") {
       const div = document.createElement("div");
       div.className = "dynamic-row";
@@ -1552,12 +1633,13 @@ Rendering dan compositing akhir"></textarea>
       document.getElementById("proj-index").value = idx;
       document.getElementById("proj-modal-title").textContent = idx === -1 ? "Tambah Karya Baru" : "Edit Karya";
       const p = idx === -1 ? {
-        title: "", category: "Game", year: new Date().getFullYear().toString(), role: "", tagline: "",
+        title: "", group: "Game Jam", category: "Game", year: new Date().getFullYear().toString(), role: "", tagline: "",
         thumbnail: "", thumbRatio: "", videoUrl: "", meta: {}, links: [], overview: "", contributions: [], gallery: []
       } : SITE_DATA.projects[idx];
 
-      document.getElementById("proj-title").value = p.title || "";
+      document.getElementById("proj-group").value = p.group || "Game Jam";
       document.getElementById("proj-category").value = p.category || "Game";
+      document.getElementById("proj-title").value = p.title || "";
       document.getElementById("proj-year").value = p.year || "";
       document.getElementById("proj-role").value = p.role || "";
       document.getElementById("proj-tagline").value = p.tagline || "";
@@ -1600,6 +1682,7 @@ Rendering dan compositing akhir"></textarea>
 
       const newObj = {
         title,
+        group: document.getElementById("proj-group").value || "Game Jam",
         category: document.getElementById("proj-category").value || "Game",
         year: document.getElementById("proj-year").value.trim(),
         role: document.getElementById("proj-role").value.trim(),
