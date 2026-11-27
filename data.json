@@ -49,8 +49,17 @@
         }
       ],
       "overview": "Kebelet! (Gotta Go to the Toilet!) is a fast-paced, comedic endless runner that combines lane-switching and obstacle-dodging with that most relatable of human crisis moments: absolutely, desperately \"kebelet\" (gotta go to the toilet) with no time to waste!\nRun through chaotic streets, dodge unexpected obstacles, jump over roadblocks, and slide under them in a frantic race against time to reach the nearest restroom. However, speed alone won't be enough to survive.",
-      "contributions": [],
-      "gallery": []
+      "contributions": [
+        "Membuat model environment",
+        "Membuat texture handpainted di model environment"
+      ],
+      "gallery": [
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795758861648-Previewin_game.gif",
+          "caption": "Pembuatan model dan texture in game",
+          "detail": ""
+        }
+      ]
     },
     {
       "title": "Bunker Proocol",
