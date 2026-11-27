@@ -30,6 +30,29 @@
   },
   "projects": [
     {
+      "title": "KEBELET",
+      "year": "2026",
+      "role": "3D Environment & Prop Artist",
+      "tagline": "",
+      "thumbnail": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795758742903-Screenshot_2026-11-27_125153.png",
+      "thumbRatio": "630 / 500",
+      "meta": {
+        "Peran": "3D Artist",
+        "Ukuran Tim": "5",
+        "Engine / Tools": "Blender",
+        "Durasi": "1 Minggu"
+      },
+      "links": [
+        {
+          "label": "Mainkan di Itch.io",
+          "url": "https://mr-mazoken.itch.io/kebelet"
+        }
+      ],
+      "overview": "Kebelet! (Gotta Go to the Toilet!) is a fast-paced, comedic endless runner that combines lane-switching and obstacle-dodging with that most relatable of human crisis moments: absolutely, desperately \"kebelet\" (gotta go to the toilet) with no time to waste!\nRun through chaotic streets, dodge unexpected obstacles, jump over roadblocks, and slide under them in a frantic race against time to reach the nearest restroom. However, speed alone won't be enough to survive.",
+      "contributions": [],
+      "gallery": []
+    },
+    {
       "title": "Bunker Proocol",
       "year": "2026",
       "role": "Environment artist",
