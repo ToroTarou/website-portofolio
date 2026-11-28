@@ -42,8 +42,18 @@
       },
       "links": [],
       "overview": "Welcome to Warung Bu Inah, a small Indonesian instant noodle stall where an ordinary night shift turns into a terrifying experience.\n\nIn this 3D horror game, you take on the role of a worker tasked with managing Warung Bu Inah during the late hours of the night. At first, everything seems normal. Customers come by to order instant noodles and drinks. Your job is simple: take their orders, prepare their food, and keep the business running smoothly.\n\nBut there is something unusual about this place.\n\nAs the night goes on, strange things begin to happen. Supernatural disturbances start threatening your workplace, and you soon realize that serving customers is not your only responsibility. Scattered around the warung are mysterious ritual offerings known as sesajen. You must find and dispose of them before a sinister entity appears and starts disturbing your shift.\n\nKeep the warung clean, serve your customers, and stay alert. One small mistake could turn an ordinary night into a terrifying nightmare.",
-      "contributions": [],
-      "gallery": []
+      "contributions": [
+        "Membuat model character",
+        "Membuat animasi character",
+        "Membuat sebagian Environment"
+      ],
+      "gallery": [
+        {
+          "img": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853193164-Cewek.gif",
+          "caption": "Aset",
+          "detail": "[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853204622-Cewek.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853234318-envi_1.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853275274-envi_2.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853351559-setan.gif]\n\n[GAMBAR: https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795853496311-ucup-ezgif.com-optimize.gif]"
+        }
+      ]
     },
     {
       "title": "Animasi Tembakan",
