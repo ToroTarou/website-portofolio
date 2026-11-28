@@ -166,12 +166,15 @@
       ]
     },
     {
-      "title": "Bunker Proocol",
+      "title": "Bunker Protocol",
+      "group": "Game Jam",
+      "category": "Game",
       "year": "2026",
       "role": "Environment artist",
       "tagline": "",
       "thumbnail": "https://raw.githubusercontent.com/ToroTarou/website-portofolio/main/images/1795715129753-bunker.png",
       "thumbRatio": "630 / 500",
+      "videoUrl": "",
       "meta": {
         "Peran": "2D Artist",
         "Ukuran Tim": "4 Orang",
