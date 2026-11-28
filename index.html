@@ -1154,9 +1154,8 @@ Rendering dan compositing akhir"></textarea>
       document.getElementById("footer-copy").textContent = `© ${new Date().getFullYear()} ${p.nama}`;
 
       document.getElementById("site-nav").innerHTML =
-        `<a href="#about">About</a>` +
-        (p.sosmed || []).map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a>`).join("") +
-        (p.email ? `<a href="mailto:${escapeHtml(p.email)}">Email</a>` : "");
+  `<a href="#about">About</a>` +
+  (p.sosmed || []).map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a>`).join("");
 
       document.getElementById("footer-links").innerHTML = p.email
         ? `<a href="mailto:${escapeHtml(p.email)}" style="color:inherit;text-decoration:none;">${escapeHtml(p.email)}</a>`
